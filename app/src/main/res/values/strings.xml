@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FyberApp</string>
+    <string name="ok_string">OK</string>
+    <string name="request_parameters_dialog_title">Request Parameters</string>
+    <string name="request_parameter_uid_label">UID:</string>
+    <string name="request_parameter_api_key_label">API Key:</string>
+    <string name="request_parameter_app_id_label">App ID:</string>
+    <string name="request_parameter_pub0_label">Pub0:</string>
+
+</resources>

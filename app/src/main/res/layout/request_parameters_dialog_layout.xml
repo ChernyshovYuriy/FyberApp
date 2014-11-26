@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <LinearLayout
+        style="@style/request_parameters_row_style">
+
+        <TextView
+            android:text="@string/request_parameter_uid_label"
+            style="@style/request_parameters_label_style" />
+
+        <EditText
+            android:id="@+id/uid_edit_view"
+            style="@style/request_parameters_edit_style" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/request_parameters_row_style">
+
+        <TextView
+            android:text="@string/request_parameter_api_key_label"
+            style="@style/request_parameters_label_style" />
+
+        <EditText
+            android:id="@+id/api_key_edit_view"
+            style="@style/request_parameters_edit_style" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/request_parameters_row_style">
+
+        <TextView
+            android:text="@string/request_parameter_app_id_label"
+            style="@style/request_parameters_label_style" />
+
+        <EditText
+            android:id="@+id/app_edit_view"
+            style="@style/request_parameters_edit_style" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/request_parameters_row_style">
+
+        <TextView
+            android:text="@string/request_parameter_pub0_label"
+            style="@style/request_parameters_label_style" />
+
+        <EditText
+            android:id="@+id/pub0_edit_view"
+            style="@style/request_parameters_edit_style" />
+
+    </LinearLayout>
+
+</LinearLayout>

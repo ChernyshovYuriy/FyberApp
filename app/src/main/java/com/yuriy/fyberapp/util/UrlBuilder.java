@@ -7,7 +7,11 @@ package com.yuriy.fyberapp.util;
  * E-Mail: chernyshov.yuriy@gmail.com
  */
 
-import android.content.Context;
+import com.yuriy.fyberapp.vo.RequestParametersVO;
+
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * {@link com.yuriy.fyberapp.util.UrlBuilder} is a helper class to provide abilities to
@@ -16,55 +20,9 @@ import android.content.Context;
 public class UrlBuilder {
 
     /**
-     * AppId key.
+     * API Key
      */
-    private static final String KEY_APPID = "appid";
-
-    /**
-     * Device Id key.
-     */
-    private static final String KEY_DEVICE_ID = "device_id";
-
-    /**
-     *  IP key.
-     */
-    private static final String KEY_IP = "ip";
-
-    /**
-     * Locale key.
-     */
-    private static final String KEY_LOCALE = "locale";
-
-    /**
-     * Timestamp key.
-     */
-    private static final String KEY_PS_TIME = "ps_time";
-
-    /**
-     * Pub0 key.
-     */
-    private static final String KEY_PUB0 = "pub0";
-
-    /**
-     * Unix Timestamp key.
-     */
-    private static final String KEY_TIMESTAMP = "timestamp";
-
-    /**
-     * Offer types key.
-     */
-    private static final String KEY_OFFER_TYPES = "offer_types";
-
-    /**
-     * Google Ad Id key.
-     */
-    private static final String KEY_GAID = "google_ad_id";
-
-    /**
-     * Google Ad Id limited tracking enabled key.
-     */
-    private static final String KEY_GAID_LIM_TRACK_ENABLED
-            = "google_ad_id_limited_tracking_enabled";
+    public static final String API_KEY = "1c915e3b5d42d05136185030892fbb846c278927";
 
     /**
      * Hash Key key.
@@ -72,18 +30,102 @@ public class UrlBuilder {
     private static final String KEY_HASH_KEY = "hashkey";
 
     /**
+     * Equal sign to separate a key from it's value.
+     */
+    private static final String EQUAL_SIGN = "=";
+
+    /**
+     * Ampersand key to separate pair of the key-value.
+     */
+    private static final String AMPERSAND_SIGN = "&";
+
+    /**
+     * Base URL for the API requests
+     */
+    protected static final String BASE_URL = "http://api.sponsorpay.com/feed/v1/offers.json?";
+
+    /**
      * Helper method to build Url from the provided parameters.
      *
-     * @param pub0
-     * @param appId
-     * @param apiKey
-     * @param uId
-     * @return Uri for the API request.
+     * @param apiKey              API Key.
+     * @param requestParametersVO Value Object that stores all necessary requests parameters.
+     * @return Url for the API request.
      */
-    public static String getUrlForRequest(final String uId, final String apiKey,
-                                          final String appId, final String pub0) {
+    public static String getUrlForRequest(final RequestParametersVO requestParametersVO,
+                                          final String apiKey) {
 
+        // Build URL string
+        final StringBuilder builder = new StringBuilder();
+        for(String key: requestParametersVO.getKeySet()) {
+            if (requestParametersVO.getParameterByKey(key).isEmpty()) {
+                continue;
+            }
+            builder.append(key).append(EQUAL_SIGN)
+                    .append(requestParametersVO.getParameterByKey(key)).append(AMPERSAND_SIGN);
+        }
 
-        return "";
+        // Append API key
+        builder.append(apiKey);
+
+        // Calculate SHA1
+        String sha1 = "";
+        try {
+            sha1 = SHA1(builder.toString());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        // Extract API key
+        builder.replace(builder.length() - apiKey.length() - 1, builder.length(), "");
+
+        // Append SHA1
+        builder.append(AMPERSAND_SIGN);
+        builder.append(KEY_HASH_KEY).append(EQUAL_SIGN).append(sha1);
+
+        // Append base url fro the request
+        builder.insert(0, BASE_URL);
+
+        return builder.toString();
+    }
+
+    /**
+     * Calculate SHA1 from the provided string.
+     *
+     * @param text String to encrypt to.
+     * @return Encrypted value.
+     * @throws NoSuchAlgorithmException
+     * @throws UnsupportedEncodingException
+     */
+    protected static String SHA1(final String text) throws NoSuchAlgorithmException,
+            UnsupportedEncodingException {
+        final MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+        messageDigest.update(text.getBytes("iso-8859-1"), 0, text.length());
+        byte[] sha1hash = messageDigest.digest();
+        return convertToHex(sha1hash);
+    }
+
+    /**
+     * Convert encrypted bytes array into string.
+     *
+     * @param data Encrypted bytes array.
+     * @return String value of the bytes array.
+     */
+    private static String convertToHex(final byte[] data) {
+        final StringBuilder stringBuffer = new StringBuilder();
+        for (byte aByte : data) {
+            int halfByte = (aByte >>> 4) & 0x0F;
+            int twoHalves = 0;
+            do {
+                if ((0 <= halfByte) && (halfByte <= 9)) {
+                    stringBuffer.append((char) ('0' + halfByte));
+                } else {
+                    stringBuffer.append((char) ('a' + (halfByte - 10)));
+                }
+                halfByte = aByte & 0x0F;
+            } while (twoHalves++ < 1);
+        }
+        return stringBuffer.toString();
     }
 }

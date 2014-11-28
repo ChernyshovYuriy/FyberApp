@@ -1,4 +1,4 @@
-package com.yuriy.fyberapp.util;
+package com.yuriy.fyberapp.net;
 
 /**
  * Created by Yuriy Chernyshov
@@ -14,7 +14,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * {@link com.yuriy.fyberapp.util.UrlBuilder} is a helper class to provide abilities to
+ * {@link UrlBuilder} is a helper class to provide abilities to
  * build request URLs according to API specification.
  */
 public class UrlBuilder {

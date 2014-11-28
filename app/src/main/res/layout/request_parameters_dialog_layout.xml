@@ -14,6 +14,9 @@
             style="@style/request_parameters_label_style" />
 
         <EditText
+
+            android:text="spiderman"
+
             android:id="@+id/uid_edit_view"
             style="@style/request_parameters_edit_style" />
 
@@ -27,6 +30,9 @@
             style="@style/request_parameters_label_style" />
 
         <EditText
+
+            android:text="1c915e3b5d42d05136185030892fbb846c278927"
+
             android:id="@+id/api_key_edit_view"
             style="@style/request_parameters_edit_style" />
 
@@ -40,6 +46,9 @@
             style="@style/request_parameters_label_style" />
 
         <EditText
+
+            android:text="2070"
+
             android:id="@+id/app_edit_view"
             style="@style/request_parameters_edit_style" />
 
@@ -53,6 +62,9 @@
             style="@style/request_parameters_label_style" />
 
         <EditText
+
+            android:text="campaign2"
+
             android:id="@+id/pub0_edit_view"
             style="@style/request_parameters_edit_style" />
 

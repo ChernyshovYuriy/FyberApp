@@ -12,13 +12,16 @@ import android.util.Log;
 
 import com.yuriy.fyberapp.service.DownloadingService;
 import com.yuriy.fyberapp.util.DeviceInfoHelper;
-import com.yuriy.fyberapp.util.UrlBuilder;
+import com.yuriy.fyberapp.net.UrlBuilder;
 import com.yuriy.fyberapp.vo.RequestParametersVO;
 
 import java.lang.ref.WeakReference;
 
 public class MainActivity extends Activity {
 
+    /**
+     * Tag for the logging message.
+     */
     private static final String CLASS_NAME = MainActivity.class.getSimpleName();
 
     /**

@@ -14,10 +14,13 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.yuriy.fyberapp.api.APIServiceProvider;
+import com.yuriy.fyberapp.api.APIServiceProviderImpl;
 import com.yuriy.fyberapp.business.DataParser;
 import com.yuriy.fyberapp.business.JSONDataParserImpl;
 import com.yuriy.fyberapp.net.Downloader;
 import com.yuriy.fyberapp.net.HTTPDownloaderImpl;
+import com.yuriy.fyberapp.vo.FyberResponseCode;
 import com.yuriy.fyberapp.vo.OffersVO;
 
 /**
@@ -109,6 +112,49 @@ public class DownloadingService extends IntentService {
     }
 
     /**
+     * Helper method that returns {@link com.yuriy.fyberapp.vo.OffersVO}
+     * if download succeeded.
+     */
+    public static OffersVO getOffers(final Message message) {
+        // Extract the data from Message, which is in the form
+        // of a Bundle that can be passed across processes.
+        final Bundle data = message.getData();
+
+        // Extract the Weather VO from the Bundle.
+        final OffersVO currentWeatherVO = (OffersVO) data.get(BUNDLE_KEY_OFFERS);
+
+        // Check to see if the download succeeded.
+        if (message.arg1 != Activity.RESULT_OK || currentWeatherVO == null)
+            return null;
+        else
+            return currentWeatherVO;
+    }
+
+    /**
+     * Helper method to extract response message from the {@link com.yuriy.fyberapp.vo.OffersVO}.
+     *
+     * @param offersVO Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
+     * @return Response Message.
+     */
+    public static String getResponseMessage(final OffersVO offersVO) {
+        if (offersVO.getMessage() == null) {
+            return "";
+        }
+        return offersVO.getMessage();
+    }
+
+    /**
+     * Helper method to validate response.
+     *
+     * @param offersVO Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
+     * @return True of response return OK message, False - otherwise.
+     */
+    public static boolean isResponseCodeOK(final OffersVO offersVO) {
+        return offersVO.getCode() != null
+                && offersVO.getCode().equals(FyberResponseCode.OK.toString());
+    }
+
+    /**
      * An inner class that inherits from {@link android.os.Handler} and uses its
      * {@link #handleMessage(android.os.Message)} hook method to process Messages sent to
      * it from {@link #onHandleIntent(android.content.Intent)} that indicate which
@@ -172,12 +218,10 @@ public class DownloadingService extends IntentService {
             final DataParser dataParser = new JSONDataParserImpl();
 
             // Instantiate appropriate API service provider
-            //final APIServiceProvider serviceProvider = new APIServiceProviderImpl(dataParser);
+            final APIServiceProvider serviceProvider = new APIServiceProviderImpl(dataParser);
 
-            // Get and return Weather
-            //return serviceProvider.getCurrentWeatherReportByCity(downloader, uri);
-
-            return null;
+            // Get and return Offers
+            return serviceProvider.getCurrentOffers(downloader, uri);
         }
 
         /**

@@ -3,6 +3,8 @@ package com.yuriy.fyberapp.net;
 import android.net.Uri;
 import android.util.Log;
 
+import com.yuriy.fyberapp.vo.ResponseVO;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -22,7 +24,7 @@ import java.io.IOException;
 
 /**
  * Implementation of the {@link com.yuriy.fyberapp.net.Downloader} interface.
- * {@link HTTPDownloaderImpl} allows to download weather data from the
+ * {@link HTTPDownloaderImpl} allows to download offers data from the
  * wer resource over HTTP protocol.
  */
 public class HTTPDownloaderImpl implements Downloader {
@@ -33,8 +35,10 @@ public class HTTPDownloaderImpl implements Downloader {
     private static final String CLASS_NAME = HTTPDownloaderImpl.class.getSimpleName();
 
     @Override
-    public byte[] downloadDataFromUri(final Uri uri) {
+    public ResponseVO downloadDataFromUri(final Uri uri) {
         HttpGet request = null;
+        final ResponseVO responseVO = ResponseVO.createInstance();
+        responseVO.setData(new byte[0]);
         try {
             request = new HttpGet(uri.toString());
         } catch (IllegalArgumentException e) {
@@ -42,7 +46,7 @@ public class HTTPDownloaderImpl implements Downloader {
         }
 
         if (request == null) {
-            return new byte[0];
+            return responseVO;
         }
 
         final HttpClient httpClient = new DefaultHttpClient();
@@ -50,11 +54,14 @@ public class HTTPDownloaderImpl implements Downloader {
             final HttpResponse httpResponse = httpClient.execute(request);
             Log.d(CLASS_NAME, "Response code: " + httpResponse.getStatusLine().getStatusCode());
             int responseCode = httpResponse.getStatusLine().getStatusCode();
+
+            responseVO.setResponseCode(responseCode);
             if (responseCode == 200) {
-                HttpEntity entity = httpResponse.getEntity();
+                final HttpEntity entity = httpResponse.getEntity();
                 if (entity != null) {
                     try {
-                        return EntityUtils.toByteArray(entity);
+                        responseVO.setData(EntityUtils.toByteArray(entity));
+                        return responseVO;
                     } catch (IOException e) {
                         Log.e(CLASS_NAME, "EntityUtils error: " + e.getMessage());
                     }
@@ -67,6 +74,6 @@ public class HTTPDownloaderImpl implements Downloader {
         } catch (SecurityException e) {
             Log.e(CLASS_NAME, "SecurityException error: " + e.getMessage());
         }
-        return new byte[0];
+        return responseVO;
     }
 }

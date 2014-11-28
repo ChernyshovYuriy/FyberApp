@@ -3,8 +3,8 @@ package com.yuriy.fyberapp.vo;
 import junit.framework.TestCase;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 /**
@@ -37,18 +37,18 @@ public class RequestParametersVOTest extends TestCase {
         mParametersVO.setUserId(uid);
 
         assertThat(mParametersVO.getUserId(), is(uid));
-        assertThat(mParametersVO.getParameterByKey(RequestParametersVO.KEY_UID), is(uid));
+        assertThat((String) mParametersVO.getParameterByKey(RequestParametersVO.KEY_UID), is(uid));
     }
 
-    public void testUIDNullShouldReturnEmptyString() {
+    public void testUIDNullShouldReturnNull() {
         final String uid = null;
         mParametersVO.setUserId(uid);
 
-        assertThat(mParametersVO.getUserId(), isEmptyString());
+        assertThat(mParametersVO.getUserId(), nullValue());
     }
 
-    public void testDefaultUIDShouldReturnEmptyString() {
-        assertThat(mParametersVO.getUserId(), isEmptyString());
+    public void testDefaultUIDShouldReturnNull() {
+        assertThat(mParametersVO.getUserId(), nullValue());
     }
 
     /**
@@ -60,18 +60,19 @@ public class RequestParametersVOTest extends TestCase {
         mParametersVO.setAppId(appid);
 
         assertThat(mParametersVO.getAppId(), is(appid));
-        assertThat(mParametersVO.getParameterByKey(RequestParametersVO.KEY_APP_ID), is(appid));
+        assertThat((String) mParametersVO.getParameterByKey(RequestParametersVO.KEY_APP_ID),
+                is(appid));
     }
 
-    public void testAppIDNullShouldReturnEmptyString() {
+    public void testAppIDNullShouldReturnNull() {
         final String appId = null;
         mParametersVO.setAppId(appId);
 
-        assertThat(mParametersVO.getAppId(), isEmptyString());
+        assertThat(mParametersVO.getAppId(), nullValue());
     }
 
-    public void testDefaultAppIDShouldReturnEmptyString() {
-        assertThat(mParametersVO.getAppId(), isEmptyString());
+    public void testDefaultAppIDShouldReturnNull() {
+        assertThat(mParametersVO.getAppId(), nullValue());
     }
 
     /**
@@ -83,18 +84,19 @@ public class RequestParametersVOTest extends TestCase {
         mParametersVO.setPub0(pub0);
 
         assertThat(mParametersVO.getPub0(), is(pub0));
-        assertThat(mParametersVO.getParameterByKey(RequestParametersVO.KEY_PUB0), is(pub0));
+        assertThat((String) mParametersVO.getParameterByKey(RequestParametersVO.KEY_PUB0),
+                is(pub0));
     }
 
-    public void testPub0NullShouldReturnEmptyString() {
+    public void testPub0NullShouldReturnNull() {
         final String pub0 = null;
         mParametersVO.setPub0(pub0);
 
-        assertThat(mParametersVO.getPub0(), isEmptyString());
+        assertThat(mParametersVO.getPub0(), nullValue());
     }
 
-    public void testDefaultPub0ShouldReturnEmptyString() {
-        assertThat(mParametersVO.getPub0(), isEmptyString());
+    public void testDefaultPub0ShouldReturnNull() {
+        assertThat(mParametersVO.getPub0(), nullValue());
     }
 
     /**
@@ -106,18 +108,18 @@ public class RequestParametersVOTest extends TestCase {
         mParametersVO.setIp(ip);
 
         assertThat(mParametersVO.getIp(), is(ip));
-        assertThat(mParametersVO.getParameterByKey(RequestParametersVO.KEY_IP), is(ip));
+        assertThat((String) mParametersVO.getParameterByKey(RequestParametersVO.KEY_IP), is(ip));
     }
 
-    public void testIPNullShouldReturnEmptyString() {
+    public void testIPNullShouldReturnNull() {
         final String ip = null;
         mParametersVO.setIp(ip);
 
-        assertThat(mParametersVO.getIp(), isEmptyString());
+        assertThat(mParametersVO.getIp(), nullValue());
     }
 
-    public void testDefaultIPShouldReturnEmptyString() {
-        assertThat(mParametersVO.getIp(), isEmptyString());
+    public void testDefaultIPShouldReturnNull() {
+        assertThat(mParametersVO.getIp(), nullValue());
     }
 
     /**
@@ -129,18 +131,19 @@ public class RequestParametersVOTest extends TestCase {
         mParametersVO.setPage(page);
 
         assertThat(mParametersVO.getPage(), is(page));
-        assertThat(mParametersVO.getParameterByKey(RequestParametersVO.KEY_PAGE), is(page));
+        assertThat((String) mParametersVO.getParameterByKey(RequestParametersVO.KEY_PAGE),
+                is(page));
     }
 
-    public void testPageNullShouldReturnEmptyString() {
+    public void testPageNullShouldReturnNull() {
         final String page = null;
         mParametersVO.setPage(page);
 
-        assertThat(mParametersVO.getPage(), isEmptyString());
+        assertThat(mParametersVO.getPage(), nullValue());
     }
 
-    public void testDefaultPageShouldReturnEmptyString() {
-        assertThat(mParametersVO.getPage(), isEmptyString());
+    public void testDefaultPageShouldReturnNull() {
+        assertThat(mParametersVO.getPage(), nullValue());
     }
 
     /**
@@ -152,18 +155,19 @@ public class RequestParametersVOTest extends TestCase {
         mParametersVO.setDeviceId(deviceId);
 
         assertThat(mParametersVO.getDeviceId(), is(deviceId));
-        assertThat(mParametersVO.getParameterByKey(RequestParametersVO.KEY_DEVICE_ID), is(deviceId));
+        assertThat((String) mParametersVO.getParameterByKey(RequestParametersVO.KEY_DEVICE_ID),
+                is(deviceId));
     }
 
-    public void testDeviceIdNullShouldReturnEmptyString() {
+    public void testDeviceIdNullShouldReturnNull() {
         final String deviceId = null;
         mParametersVO.setDeviceId(deviceId);
 
-        assertThat(mParametersVO.getDeviceId(), isEmptyString());
+        assertThat(mParametersVO.getDeviceId(), nullValue());
     }
 
-    public void testDefaultDeviceIdShouldReturnEmptyString() {
-        assertThat(mParametersVO.getDeviceId(), isEmptyString());
+    public void testDefaultDeviceIdShouldReturnNull() {
+        assertThat(mParametersVO.getDeviceId(), nullValue());
     }
 
     /**
@@ -175,18 +179,19 @@ public class RequestParametersVOTest extends TestCase {
         mParametersVO.setLocale(locale);
 
         assertThat(mParametersVO.getLocale(), is(locale));
-        assertThat(mParametersVO.getParameterByKey(RequestParametersVO.KEY_LOCALE), is(locale));
+        assertThat((String) mParametersVO.getParameterByKey(RequestParametersVO.KEY_LOCALE),
+                is(locale));
     }
 
-    public void testLocaleNullShouldReturnEmptyString() {
+    public void testLocaleNullShouldReturnNull() {
         final String locale = null;
         mParametersVO.setLocale(locale);
 
-        assertThat(mParametersVO.getLocale(), isEmptyString());
+        assertThat(mParametersVO.getLocale(), nullValue());
     }
 
-    public void testDefaultLocaleShouldReturnEmptyString() {
-        assertThat(mParametersVO.getLocale(), isEmptyString());
+    public void testDefaultLocaleShouldReturnNull() {
+        assertThat(mParametersVO.getLocale(), nullValue());
     }
 
     /**
@@ -198,18 +203,19 @@ public class RequestParametersVOTest extends TestCase {
         mParametersVO.setPsTime(psTime);
 
         assertThat(mParametersVO.getPsTime(), is(psTime));
-        assertThat(mParametersVO.getParameterByKey(RequestParametersVO.KEY_PS_TIME), is(psTime));
+        assertThat((String) mParametersVO.getParameterByKey(RequestParametersVO.KEY_PS_TIME),
+                is(psTime));
     }
 
-    public void testPsTimeNullShouldReturnEmptyString() {
+    public void testPsTimeNullShouldReturnNull() {
         final String psTime = null;
         mParametersVO.setPsTime(psTime);
 
-        assertThat(mParametersVO.getPsTime(), isEmptyString());
+        assertThat(mParametersVO.getPsTime(), nullValue());
     }
 
-    public void testDefaultPsTimeShouldReturnEmptyString() {
-        assertThat(mParametersVO.getPsTime(), isEmptyString());
+    public void testDefaultPsTimeShouldReturnNull() {
+        assertThat(mParametersVO.getPsTime(), nullValue());
     }
 
     /**
@@ -221,23 +227,24 @@ public class RequestParametersVOTest extends TestCase {
         mParametersVO.setTimestamp(timestamp);
 
         assertThat(mParametersVO.getTimestamp(), is(timestamp));
-        assertThat(mParametersVO.getParameterByKey(RequestParametersVO.KEY_TIMESTAMP), is(timestamp));
+        assertThat((String) mParametersVO.getParameterByKey(RequestParametersVO.KEY_TIMESTAMP),
+                is(timestamp));
     }
 
-    public void testTimestampNullShouldReturnEmptyString() {
+    public void testTimestampNullShouldReturnNull() {
         final String timestamp = null;
         mParametersVO.setTimestamp(timestamp);
 
-        assertThat(mParametersVO.getTimestamp(), isEmptyString());
+        assertThat(mParametersVO.getTimestamp(), nullValue());
     }
 
-    public void testDefaultTimestampShouldReturnEmptyString() {
-        assertThat(mParametersVO.getTimestamp(), isEmptyString());
+    public void testDefaultTimestampShouldReturnNull() {
+        assertThat(mParametersVO.getTimestamp(), nullValue());
     }
 
-    public void testAllValuesAreEmptyByDefault() {
+    public void testAllValuesAreNullByDefault() {
         for(String key: mParametersVO.getKeySet()) {
-            assertThat(mParametersVO.getParameterByKey(key), isEmptyString());
+            assertThat(mParametersVO.getParameterByKey(key), nullValue());
         }
     }
 }

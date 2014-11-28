@@ -2,6 +2,8 @@ package com.yuriy.fyberapp.net;
 
 import android.net.Uri;
 
+import com.yuriy.fyberapp.vo.ResponseVO;
+
 /**
  * Created by Yuriy Chernyshov
  * At Android Studio
@@ -20,7 +22,7 @@ public interface Downloader {
      * Method to download data from provided {@link android.net.Uri}.
      *
      * @param uri Provided {@link android.net.Uri}.
-     * @return Downloaded data as bytes array.
+     * @return {@link com.yuriy.fyberapp.vo.ResponseVO}.
      */
-    public byte[] downloadDataFromUri(final Uri uri);
+    public ResponseVO downloadDataFromUri(final Uri uri);
 }

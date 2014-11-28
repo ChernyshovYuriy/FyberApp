@@ -9,10 +9,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.yuriy.fyberapp.service.DownloadingService;
 import com.yuriy.fyberapp.util.DeviceInfoHelper;
 import com.yuriy.fyberapp.net.UrlBuilder;
+import com.yuriy.fyberapp.vo.OffersVO;
 import com.yuriy.fyberapp.vo.RequestParametersVO;
 
 import java.lang.ref.WeakReference;
@@ -53,6 +56,25 @@ public class MainActivity extends Activity {
     }
 
     /**
+     * Display the Dialog to the User.
+     *
+     * @param message The String to display.
+     */
+    private void showDialog(final String message) {
+        mProgressDialog = ProgressDialog.show(this, "Download", message, true);
+    }
+
+    /**
+     * Dismiss the Dialog
+     */
+    private void dismissDialog() {
+        if (mProgressDialog == null) {
+            return;
+        }
+        mProgressDialog.dismiss();
+    }
+
+    /**
      * Callback method that is called from the {@link com.yuriy.fyberapp.RequestParametersDialog}.
      *
      * @param apiKey API Key
@@ -62,6 +84,10 @@ public class MainActivity extends Activity {
      */
     public void onRequestParametersDialogResult(final String userId, final String apiKey,
                                                 final String appId, final String pub0) {
+
+        hideResponseErrorMessage();
+
+        showDialog("Download Offers");
 
         // Collect request parameters
         final RequestParametersVO requestParametersVO = RequestParametersVO.createInstance();
@@ -84,6 +110,27 @@ public class MainActivity extends Activity {
 
         // Start the DownloadService.
         startService(intent);
+    }
+
+    /**
+     * Show response error message.
+     *
+     * @param message Response Error message.
+     */
+    private void showResponseErrorMessage(final String message) {
+        Log.d(CLASS_NAME, "Error message:" + message);
+        final TextView textView = (TextView) findViewById(R.id.response_error_msg_view);
+        textView.setVisibility(View.VISIBLE);
+        textView.setText(message);
+    }
+
+    /**
+     * Hide response error message.
+     */
+    private void hideResponseErrorMessage() {
+        final TextView textView = (TextView) findViewById(R.id.response_error_msg_view);
+        textView.setText("");
+        textView.setVisibility(View.GONE);
     }
 
     /**
@@ -123,14 +170,20 @@ public class MainActivity extends Activity {
             }
 
             // Stop displaying the progress dialog.
-            //activity.dismissDialog();
+            activity.dismissDialog();
 
             // Get message Id
             final int what = message.what;
 
             switch (what) {
                 case DownloadingService.ServiceHandler.MSG_MAKE_REQUEST:
-
+                    final OffersVO offersVO = DownloadingService.getOffers(message);
+                    if (offersVO == null)
+                        return;
+                    if (!DownloadingService.isResponseCodeOK(offersVO)) {
+                        activity.showResponseErrorMessage(
+                                DownloadingService.getResponseMessage(offersVO));
+                    }
                     break;
 
                 default:

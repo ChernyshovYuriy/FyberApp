@@ -7,15 +7,13 @@ package com.yuriy.fyberapp.vo;
  * E-Mail: chernyshov.yuriy@gmail.com
  */
 
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 /**
  * {@link com.yuriy.fyberapp.vo.RequestParametersVO} is a Value Object which holds
  * parameters for the API request.
  */
-public class RequestParametersVO {
+public class RequestParametersVO extends BaseVO {
 
     /**
      * The unique User ID key, as used internally in the application.
@@ -77,12 +75,6 @@ public class RequestParametersVO {
      */
     protected static final String KEY_GAID_LIM_TRACK_ENABLED
             = "google_ad_id_limited_tracking_enabled";
-
-    /**
-     * Map which is keep pairs of the key - value, where 'key' is a name of the parameter
-     * and 'value' is its value.
-     */
-    private final Map<String, String> parametersMap = new TreeMap<String, String>();
 
     /**
      * Private constructor.
@@ -245,26 +237,6 @@ public class RequestParametersVO {
     }
 
     /**
-     * @return The set of the keys stored in the map.
-     */
-    public Set<String> getKeySet() {
-        return parametersMap.keySet();
-    }
-
-    /**
-     * Return parameter from the map by the provided key.
-     * @param key Key of the parameter.
-     * @return Value, associated with the key, or empty string if key is not found.
-     */
-    public String getParameterByKey(final String key) {
-        final String value = parametersMap.get(key);
-        if (value == null) {
-            return "";
-        }
-        return value;
-    }
-
-    /**
      * Factory method to create instance of the {@link com.yuriy.fyberapp.vo.RequestParametersVO}.
      * @return Instance of the {@link com.yuriy.fyberapp.vo.RequestParametersVO}
      */
@@ -272,13 +244,14 @@ public class RequestParametersVO {
         return new RequestParametersVO();
     }
 
-    /**
-     * Set provided value at the specified key in the map.
-     *
-     * @param key   Key of the parameter
-     * @param value Value of the parameter.
-     */
-    private void setParameterForKey(final String key, final String value) {
-        parametersMap.put(key, value);
+    @Override
+    public Set<String> getKeySet() {
+        return super.getKeySet();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public  String getParameterByKey(String key) {
+        return super.getParameterByKey(key);
     }
 }

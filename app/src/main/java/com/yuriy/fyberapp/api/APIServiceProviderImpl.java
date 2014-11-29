@@ -113,7 +113,6 @@ public class APIServiceProviderImpl implements APIServiceProvider {
         // Extract Offers
         final List<OfferVO> collection = mDataParser.getOffers(response);
         for (OfferVO offer : collection) {
-            Log.d("", "Offer:" + offer.getTitle());
             offersVO.addOfferVO(offer);
         }
 

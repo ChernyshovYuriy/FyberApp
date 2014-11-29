@@ -13,9 +13,7 @@ import com.yuriy.fyberapp.R;
 import com.yuriy.fyberapp.utils.ImageFetcher;
 import com.yuriy.fyberapp.vo.OfferVO;
 
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Yuriy Chernyshov
@@ -29,7 +27,6 @@ public class OfferAdapter extends BaseAdapter {
     private Activity mCurrentActivity;
     private ImageFetcher mImageFetcher;
     private final ListAdapterData<OfferVO> mAdapterData = new ListAdapterData<OfferVO>(null);
-    private final Map<Integer, Integer> mItemsIdsHash = new Hashtable<Integer, Integer>();
 
     /**
      * Constructor.
@@ -89,6 +86,20 @@ public class OfferAdapter extends BaseAdapter {
         for (OfferVO item : items) {
             addItem(item);
         }
+    }
+
+    /**
+     * @return Adapter data.
+     */
+    public ListAdapterData<OfferVO> getData() {
+        return mAdapterData;
+    }
+
+    /**
+     * Clear adapter data.
+     */
+    public void clear() {
+        mAdapterData.clear();
     }
 
     /**

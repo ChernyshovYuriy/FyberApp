@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.yuriy.fyberapp.list.ListAdapterData;
 import com.yuriy.fyberapp.list.OfferAdapter;
 import com.yuriy.fyberapp.net.UrlBuilder;
 import com.yuriy.fyberapp.service.DownloadingService;
@@ -34,6 +35,11 @@ public class MainActivity extends FragmentActivity {
     private static final String CLASS_NAME = MainActivity.class.getSimpleName();
 
     /**
+     * Key to keep adapter data in the save instance bundle
+     */
+    private static final String KEY_ADAPTER_DATA = "KEY_ADAPTER_DATA";
+
+    /**
      * Display progress of download
      */
     private ProgressDialog mProgressDialog;
@@ -42,8 +48,6 @@ public class MainActivity extends FragmentActivity {
      * Stores an instance of {@link com.yuriy.fyberapp.MainActivity.DownloadHandler}.
      */
     private Handler mDownloadHandler = null;
-
-    private ImageFetcher mImageFetcher; // Handles loading the  image in a background thread
 
     /**
      * List adapter for the list of Offers.
@@ -58,24 +62,64 @@ public class MainActivity extends FragmentActivity {
         // Initialize the downloadHandler.
         mDownloadHandler = new DownloadHandler(this);
 
-        mImageFetcher = ImageFetcherFactory.getSmallImageFetcher(this);
+        // Handles loading the  image in a background thread
+        final ImageFetcher mImageFetcher = ImageFetcherFactory.getSmallImageFetcher(this);
 
         // Create and set empty adapter
         mListAdapter = new OfferAdapter(this, mImageFetcher);
 
         final ListView listView = (ListView) findViewById(R.id.offers_list_view);
         listView.setAdapter(mListAdapter);
+
+        if (savedInstanceState == null) {
+
+            showRequestDialog();
+
+            return;
+        }
+
+        // Restore Activity state
+
+        final ListAdapterData<OfferVO> listItems =
+                (ListAdapterData<OfferVO>) savedInstanceState.getSerializable(KEY_ADAPTER_DATA);
+        if (listItems == null) {
+            return;
+        }
+        setListAdapterData(listItems.getItems());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
+        mListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+
+        // Save current state of the Activity
+        outState.putSerializable(KEY_ADAPTER_DATA, mListAdapter.getData());
+
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * Click handler od the "Make request" button.
+     *
+     * @param view View related to the button.
+     */
+    public void onMakeRequestHandler(final View view) {
+        showRequestDialog();
+    }
+
+    /**
+     * Show dialog for the request to the Fyber API.
+     */
+    private void showRequestDialog() {
         // Create an instance of the dialog fragment and show it
         final DialogFragment settingsDialog = new RequestParametersDialog();
         settingsDialog.show(getFragmentManager(), RequestParametersDialog.FRAGMENT_TAG);
-
-        mListAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -115,18 +159,23 @@ public class MainActivity extends FragmentActivity {
     /**
      * Callback method that is called from the {@link com.yuriy.fyberapp.RequestParametersDialog}.
      *
-     * @param apiKey API Key
-     * @param appId  Application ID
-     * @param pub0   Pub0 (custom parameter)
-     * @param userId User ID
+     * @param apiKey            API Key
+     * @param appId             Application ID
+     * @param pub0              Pub0 (custom parameter)
+     * @param userId            User ID
+     * @param isUseFakeResponse Set to True is it is necessary to receive fake response
      */
     public void onRequestParametersDialogResult(final String userId, final String apiKey,
-                                                final String appId, final String pub0) {
+                                                final String appId, final String pub0,
+                                                final boolean isUseFakeResponse) {
 
         hideResponseErrorMessage();
 
         final ListView listView = (ListView) findViewById(R.id.offers_list_view);
         listView.setVisibility(View.GONE);
+
+        mListAdapter.clear();
+        mListAdapter.notifyDataSetChanged();
 
         showDialog("Download Offers");
 
@@ -146,7 +195,7 @@ public class MainActivity extends FragmentActivity {
         // The downloaded data is later displayed in the
         // UI Thread via the downloadHandler() method defined below.
         final Intent intent = DownloadingService.makeRequestIntent(this,
-                Uri.parse(url),
+                Uri.parse(url), isUseFakeResponse,
                 mDownloadHandler);
 
         // Start the DownloadService.

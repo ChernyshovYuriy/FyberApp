@@ -1,5 +1,6 @@
 package com.yuriy.fyberapp.list;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * On 11/29/14
  * E-Mail: chernyshov.yuriy@gmail.com
  */
-public class ListAdapterData<T> {
+public class ListAdapterData<T> implements Serializable {
 
     private final List<T> mItems;
 
@@ -57,5 +58,12 @@ public class ListAdapterData<T> {
      */
     public int getItemsCount() {
         return mItems.size();
+    }
+
+    /**
+     * Clear collection of items
+     */
+    public void clear() {
+        mItems.clear();
     }
 }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 /**
@@ -37,7 +38,8 @@ public class RequestParametersDialog extends DialogFragment {
         final EditText apiKeyEditView = (EditText) layout.findViewById(R.id.api_key_edit_view);
         final EditText appIdEditView = (EditText) layout.findViewById(R.id.app_edit_view);
         final EditText pub0EditView = (EditText) layout.findViewById(R.id.pub0_edit_view);
-
+        final CheckBox useFakeResponseCheckView
+                = (CheckBox) layout.findViewById(R.id.use_fake_data_check_view);
 
         // Use the Builder class for convenient dialog construction
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -50,7 +52,8 @@ public class RequestParametersDialog extends DialogFragment {
                                 uidEditView.getText().toString().trim(),
                                 apiKeyEditView.getText().toString().trim(),
                                 appIdEditView.getText().toString().trim(),
-                                pub0EditView.getText().toString().trim()
+                                pub0EditView.getText().toString().trim(),
+                                useFakeResponseCheckView.isChecked()
                         );
                     }
                 });

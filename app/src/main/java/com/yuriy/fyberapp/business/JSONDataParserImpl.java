@@ -79,7 +79,7 @@ public class JSONDataParserImpl implements DataParser {
         OfferVO offerItem;
         try {
             for (int i = 0; i < offersJSON.length(); i++) {
-                item = offersJSON.getJSONObject(0);
+                item = offersJSON.getJSONObject(i);
                 if (item == null) {
                     continue;
                 }

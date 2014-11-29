@@ -58,7 +58,7 @@
                 "lowres": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_60.png",
                 "hires": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_175.png"
             },
-            "payout": 90,
+            "payout": 56,
             "time_to_payout" : {
                 "amount": 1800 ,
                 "readable": "30 minutes"
@@ -84,7 +84,7 @@
                 "lowres": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_60.png",
                 "hires": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_175.png"
             },
-            "payout": 90,
+            "payout": 86,
             "time_to_payout" : {
                 "amount": 1800 ,
                 "readable": "30 minutes"
@@ -110,7 +110,7 @@
                 "lowres": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_60.png",
                 "hires": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_175.png"
             },
-            "payout": 90,
+            "payout": 0,
             "time_to_payout" : {
                 "amount": 1800 ,
                 "readable": "30 minutes"
@@ -136,7 +136,7 @@
                 "lowres": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_60.png",
                 "hires": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_175.png"
             },
-            "payout": 90,
+            "payout": 9,
             "time_to_payout" : {
                 "amount": 1800 ,
                 "readable": "30 minutes"
@@ -162,7 +162,7 @@
                 "lowres": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_60.png",
                 "hires": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_175.png"
             },
-            "payout": 90,
+            "payout": 60,
             "time_to_payout" : {
                 "amount": 1800 ,
                 "readable": "30 minutes"
@@ -188,7 +188,7 @@
                 "lowres": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_60.png",
                 "hires": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_175.png"
             },
-            "payout": 90,
+            "payout": 46,
             "time_to_payout" : {
                 "amount": 1800 ,
                 "readable": "30 minutes"
@@ -214,7 +214,7 @@
                 "lowres": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_60.png",
                 "hires": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_175.png"
             },
-            "payout": 90,
+            "payout": 66,
             "time_to_payout" : {
                 "amount": 1800 ,
                 "readable": "30 minutes"
@@ -240,7 +240,7 @@
                 "lowres": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_60.png",
                 "hires": "http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_175.png"
             },
-            "payout": 90,
+            "payout": 35,
             "time_to_payout" : {
                 "amount": 1800 ,
                 "readable": "30 minutes"

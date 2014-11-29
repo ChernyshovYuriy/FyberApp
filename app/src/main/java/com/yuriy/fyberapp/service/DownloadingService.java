@@ -14,14 +14,13 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.yuriy.fyberapp.R;
 import com.yuriy.fyberapp.api.APIServiceProvider;
 import com.yuriy.fyberapp.api.APIServiceProviderImpl;
 import com.yuriy.fyberapp.business.DataParser;
 import com.yuriy.fyberapp.business.JSONDataParserImpl;
 import com.yuriy.fyberapp.net.Downloader;
+import com.yuriy.fyberapp.net.FakeDownloader;
 import com.yuriy.fyberapp.net.HTTPDownloaderImpl;
-import com.yuriy.fyberapp.utils.AppUtils;
 import com.yuriy.fyberapp.vo.FyberResponseCode;
 import com.yuriy.fyberapp.vo.OfferVO;
 import com.yuriy.fyberapp.vo.OffersVO;
@@ -234,6 +233,7 @@ public class DownloadingService extends IntentService {
 
             // Extract the Messenger.
             final Messenger messenger = (Messenger) intent.getExtras().get(BUNDLE_KEY_MESSENGER);
+
             final boolean isUseFakeResponse
                     = intent.getExtras().getBoolean(BUNDLE_KEY_USE_FAKE_RESPONSE);
 
@@ -253,7 +253,12 @@ public class DownloadingService extends IntentService {
          */
         public OffersVO downloadOffers(final Uri uri, final boolean isUseFakeResponse) {
             // Instantiate appropriate downloader (HTTP one)
-            final Downloader downloader = new HTTPDownloaderImpl();
+            Downloader downloader = new HTTPDownloaderImpl();
+            if (isUseFakeResponse) {
+                // Use fake downloader to simulate real response
+                downloader = FakeDownloader.createInstance();
+                ((FakeDownloader) downloader).setContext(getApplicationContext());
+            }
 
             // Instantiate appropriate parse (JSON one)
             final DataParser dataParser = new JSONDataParserImpl();
@@ -262,12 +267,7 @@ public class DownloadingService extends IntentService {
             final APIServiceProvider serviceProvider = new APIServiceProviderImpl(dataParser);
 
             // Get and return Offers
-            if (!isUseFakeResponse) {
-                return serviceProvider.getCurrentOffers(downloader, uri);
-            }
-
-            return ((APIServiceProviderImpl)serviceProvider).getFakeOffers(downloader, uri,
-                    AppUtils.getStringResource(R.raw.response, getApplicationContext()));
+            return serviceProvider.getCurrentOffers(downloader, uri);
         }
 
         /**

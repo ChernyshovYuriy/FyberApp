@@ -9,13 +9,16 @@ import android.util.DisplayMetrics;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 
 /**
  * Created by Yuriy Chernyshov
  * At Android Studio
  * On 11/29/14
  * E-Mail: chernyshov.yuriy@gmail.com
+ */
+
+/**
+ * {@link com.yuriy.fyberapp.utils.AppUtils} is a helper class which holds various help-methods
  */
 public class AppUtils {
 
@@ -54,18 +57,6 @@ public class AppUtils {
             }
         }
         return new byte[0];
-    }
-
-    /**
-     * Read resource file as string.
-     *
-     * @param id      Identifier of the resource.
-     * @param context Application context.
-     * @return String from the resource file
-     * @throws IOException
-     */
-    public static String getStringResource(int id, Context context) {
-        return new String(getResource(id, context), Charset.forName("UTF-8"));
     }
 
     public static boolean hasFroyo() {

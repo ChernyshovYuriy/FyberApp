@@ -31,11 +31,6 @@ public class APIServiceProviderImpl implements APIServiceProvider {
     private DataParser mDataParser;
 
     /**
-     * This field holds fake result data which is helpful when debug application.
-     */
-    private String mFakeResult;
-
-    /**
      * Constructor.
      *
      * @param dataParser Implementation of the {@link com.yuriy.fyberapp.business.DataParser}.
@@ -45,21 +40,6 @@ public class APIServiceProviderImpl implements APIServiceProvider {
             Log.w(CLASS_NAME, "Constructor -> data parser is null");
         }
         mDataParser = dataParser;
-    }
-
-    /**
-     * This method allows to test functionality of the response processing py the providing fake
-     * data as response.
-     * @param downloader   Implementation of the {@link com.yuriy.fyberapp.net.Downloader}
-     * @param uri          Provided Uri.
-     * @param fakeResponse Fake response.
-     * @return {@link com.yuriy.fyberapp.vo.OffersVO}
-     */
-    public OffersVO getFakeOffers(final Downloader downloader, final Uri uri,
-                                     final String fakeResponse) {
-        mFakeResult = fakeResponse;
-
-        return getCurrentOffers(downloader, uri);
     }
 
     @Override
@@ -79,12 +59,8 @@ public class APIServiceProviderImpl implements APIServiceProvider {
             return offersVO;
         }
 
-        //final String response = new String(responseBytes);
-
-        String response = new String(responseBytes);
-        if (mFakeResult != null && !mFakeResult.isEmpty()) {
-            response = mFakeResult;
-        }
+        // Get Response String
+        final String response = new String(responseBytes);
 
         Log.i(CLASS_NAME, "Offers Response:\n" + response);
 

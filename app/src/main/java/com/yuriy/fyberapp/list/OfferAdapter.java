@@ -122,7 +122,7 @@ public class OfferAdapter extends BaseAdapter {
     }
 
     /**
-     * Create View holder to keep reference tot he layout items
+     * Create View holder to keep reference to the layout items
      * @param view {@link android.view.View}
      * @return {@link ListAdapterViewHolder} object
      */

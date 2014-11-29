@@ -35,7 +35,7 @@ public class HTTPDownloaderImpl implements Downloader {
     private static final String CLASS_NAME = HTTPDownloaderImpl.class.getSimpleName();
 
     @Override
-    public ResponseVO downloadDataFromUri(final Uri uri) {
+    public ResponseVO downloadDataFromUri(final Uri uri, final String apiKey) {
         HttpGet request = null;
         final ResponseVO responseVO = ResponseVO.createInstance();
         responseVO.setData(new byte[0]);
@@ -52,15 +52,30 @@ public class HTTPDownloaderImpl implements Downloader {
         final HttpClient httpClient = new DefaultHttpClient();
         try {
             final HttpResponse httpResponse = httpClient.execute(request);
-            Log.d(CLASS_NAME, "Response code: " + httpResponse.getStatusLine().getStatusCode());
             int responseCode = httpResponse.getStatusLine().getStatusCode();
+            Log.d(CLASS_NAME, "Response code: " + responseCode);
 
             responseVO.setResponseCode(responseCode);
             if (responseCode == 200) {
                 final HttpEntity entity = httpResponse.getEntity();
                 if (entity != null) {
                     try {
-                        responseVO.setData(EntityUtils.toByteArray(entity));
+                        final byte[] response = EntityUtils.toByteArray(entity);
+
+                        // Validate Response
+                        final ResponseValidator responseValidator
+                                = HttpResponseValidator.createInstance();
+                        responseValidator.setApiKey(apiKey);
+                        ((HttpResponseValidator) responseValidator).setHttpHeaders(
+                                httpResponse.getAllHeaders()
+                        );
+                        if (!responseValidator.isValid(response)) {
+                            // TODO : Probably it is necessary to improve this section
+                            responseVO.setResponseCode(401);
+                            return responseVO;
+                        }
+
+                        responseVO.setData(response);
                         return responseVO;
                     } catch (IOException e) {
                         Log.e(CLASS_NAME, "EntityUtils error: " + e.getMessage());

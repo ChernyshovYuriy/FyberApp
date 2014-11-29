@@ -40,7 +40,7 @@ public class FakeDownloader implements Downloader {
     }
 
     @Override
-    public ResponseVO downloadDataFromUri(final Uri uri) {
+    public ResponseVO downloadDataFromUri(final Uri uri, final String apiKey) {
         final ResponseVO responseVO = ResponseVO.createInstance();
         responseVO.setResponseCode(200);
         if (mContext != null) {

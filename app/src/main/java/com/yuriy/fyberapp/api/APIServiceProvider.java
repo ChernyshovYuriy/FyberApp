@@ -25,7 +25,9 @@ public interface APIServiceProvider {
      *
      * @param downloader Implementation of the {@link com.yuriy.fyberapp.net.Downloader}.
      * @param uri        {@link android.net.Uri} of the request.
+     * @param apiKey     API Key.
      * @return {@link com.yuriy.fyberapp.vo.OffersVO}.
      */
-    public OffersVO getCurrentOffers(final Downloader downloader, final Uri uri);
+    public OffersVO getCurrentOffers(final Downloader downloader, final Uri uri,
+                                     final String apiKey);
 }

@@ -58,7 +58,7 @@ public class DownloadingServiceTest extends ServiceTestCase<DownloadingService> 
 
         // Sets up an intent to start the service under test
         mStartServiceIntent
-                = DownloadingService.makeRequestIntent(getSystemContext(), mUri, false, mHandler);
+                = DownloadingService.makeRequestIntent(getSystemContext(), mUri, "", false, mHandler);
     }
 
     public void testIntentWithCorrectDataCreated() {

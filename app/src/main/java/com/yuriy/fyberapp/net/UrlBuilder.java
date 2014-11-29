@@ -98,7 +98,7 @@ public class UrlBuilder {
      * @throws NoSuchAlgorithmException
      * @throws UnsupportedEncodingException
      */
-    protected static String SHA1(final String text) throws NoSuchAlgorithmException,
+    public static String SHA1(final String text) throws NoSuchAlgorithmException,
             UnsupportedEncodingException {
         final MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
         messageDigest.update(text.getBytes("iso-8859-1"), 0, text.length());

@@ -13,7 +13,6 @@ import org.mockito.ArgumentCaptor;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -55,11 +54,11 @@ public class DataParserTest extends InstrumentationTestCase {
         responseVO.setData(ApplicationTest.RAW_RESPONSE.getBytes());
 
         // when downloader asks to download data - return real data
-        when(mDownloader.downloadDataFromUri(Uri.parse(""))).thenReturn(responseVO);
+        when(mDownloader.downloadDataFromUri(Uri.parse(""), "")).thenReturn(responseVO);
     }
 
     public void testParseCurrentOffersCall() {
-        mServiceProvider.getCurrentOffers(mDownloader, Uri.parse(""));
+        mServiceProvider.getCurrentOffers(mDownloader, Uri.parse(""), "");
 
         final ArgumentCaptor<String> codeCapture = ArgumentCaptor.forClass(String.class);
         final ArgumentCaptor<String> messageCapture = ArgumentCaptor.forClass(String.class);

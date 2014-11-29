@@ -43,12 +43,13 @@ public class APIServiceProviderImpl implements APIServiceProvider {
     }
 
     @Override
-    public OffersVO getCurrentOffers(final Downloader downloader, final Uri uri) {
+    public OffersVO getCurrentOffers(final Downloader downloader, final Uri uri,
+                                     final String apiKey) {
         // Initialize return object.
         final OffersVO offersVO = OffersVO.createInstance();
 
         // Download response from the server
-        final ResponseVO responseVO = getResponseVO(downloader, uri);
+        final ResponseVO responseVO = getResponseVO(downloader, uri, apiKey);
 
         // Get response data
         final byte[] responseBytes = responseVO.getData();
@@ -100,9 +101,11 @@ public class APIServiceProviderImpl implements APIServiceProvider {
      *
      * @param downloader Implementation of the {@link com.yuriy.fyberapp.net.Downloader}
      * @param uri        Provided Uri
+     * @param apiKey     API Key.
      * @return Downloaded data as bytes array.
      */
-    private ResponseVO getResponseVO(final Downloader downloader, final Uri uri) {
+    private ResponseVO getResponseVO(final Downloader downloader, final Uri uri,
+                                     final String apiKey) {
         if (downloader == null) {
             Log.w(CLASS_NAME, "getResponseVO -> downloader is null");
             return null;
@@ -113,6 +116,6 @@ public class APIServiceProviderImpl implements APIServiceProvider {
         }
 
         // Download response from the server
-        return downloader.downloadDataFromUri(uri);
+        return downloader.downloadDataFromUri(uri, apiKey);
     }
 }

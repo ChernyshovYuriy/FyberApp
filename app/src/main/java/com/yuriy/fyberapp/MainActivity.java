@@ -195,7 +195,7 @@ public class MainActivity extends FragmentActivity {
         // The downloaded data is later displayed in the
         // UI Thread via the downloadHandler() method defined below.
         final Intent intent = DownloadingService.makeRequestIntent(this,
-                Uri.parse(url), isUseFakeResponse,
+                Uri.parse(url), apiKey, isUseFakeResponse,
                 mDownloadHandler);
 
         // Start the DownloadService.

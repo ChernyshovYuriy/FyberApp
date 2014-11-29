@@ -52,6 +52,11 @@ public class DownloadingService extends IntentService {
     protected static final String BUNDLE_KEY_USE_FAKE_RESPONSE = "USE_FAKE_RESPONSE";
 
     /**
+     * Key for the {@link android.os.Bundle} store to hold API Key.
+     */
+    protected static final String BUNDLE_KEY_API_KEY = "API_KEY";
+
+    /**
      * Key for the {@link android.os.Bundle} store to hold a
      * {@link com.yuriy.fyberapp.vo.OffersVO}
      */
@@ -106,6 +111,7 @@ public class DownloadingService extends IntentService {
      */
     public static Intent makeRequestIntent(final Context context,
                                            final Uri uri,
+                                           final String apiKey,
                                            final boolean useFakeResponse,
                                            final Handler downloadHandler) {
         // Create the Intent that's associated to the WeatherService class.
@@ -121,6 +127,8 @@ public class DownloadingService extends IntentService {
         }
 
         intent.putExtra(BUNDLE_KEY_USE_FAKE_RESPONSE, useFakeResponse);
+
+        intent.putExtra(BUNDLE_KEY_API_KEY, apiKey);
 
         return intent;
     }
@@ -237,8 +245,10 @@ public class DownloadingService extends IntentService {
             final boolean isUseFakeResponse
                     = intent.getExtras().getBoolean(BUNDLE_KEY_USE_FAKE_RESPONSE);
 
+            final String apiKey = intent.getExtras().getString(BUNDLE_KEY_API_KEY);
+
             // Download the requested data.
-            final OffersVO offersVO = downloadOffers(intent.getData(), isUseFakeResponse);
+            final OffersVO offersVO = downloadOffers(intent.getData(), isUseFakeResponse, apiKey);
 
             // Send the response via the Messenger.
             sendOffers(messenger, offersVO);
@@ -248,10 +258,12 @@ public class DownloadingService extends IntentService {
          * Download the requested data and return the instance of the
          * {@link com.yuriy.fyberapp.vo.OffersVO} .
          *
-         * @param uri URI of the weather data.
-         * @return Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
+         * @param uri    URI of the weather data.
+         * @return       Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
+         * @param apiKey API Key
          */
-        public OffersVO downloadOffers(final Uri uri, final boolean isUseFakeResponse) {
+        public OffersVO downloadOffers(final Uri uri, final boolean isUseFakeResponse,
+                                       final String apiKey) {
             // Instantiate appropriate downloader (HTTP one)
             Downloader downloader = new HTTPDownloaderImpl();
             if (isUseFakeResponse) {
@@ -267,7 +279,7 @@ public class DownloadingService extends IntentService {
             final APIServiceProvider serviceProvider = new APIServiceProviderImpl(dataParser);
 
             // Get and return Offers
-            return serviceProvider.getCurrentOffers(downloader, uri);
+            return serviceProvider.getCurrentOffers(downloader, uri, apiKey);
         }
 
         /**

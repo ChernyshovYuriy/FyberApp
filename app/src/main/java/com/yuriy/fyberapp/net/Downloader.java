@@ -22,8 +22,7 @@ public interface Downloader {
      * Method to download data from provided {@link android.net.Uri}.
      *
      * @param uri    Provided {@link android.net.Uri}.
-     * @param apiKey API Key.
      * @return {@link com.yuriy.fyberapp.vo.ResponseVO}.
      */
-    public ResponseVO downloadDataFromUri(final Uri uri, final String apiKey);
+    public ResponseVO downloadDataFromUri(final Uri uri);
 }

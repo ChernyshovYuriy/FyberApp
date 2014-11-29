@@ -35,7 +35,7 @@ public class HTTPDownloaderImpl implements Downloader {
     private static final String CLASS_NAME = HTTPDownloaderImpl.class.getSimpleName();
 
     @Override
-    public ResponseVO downloadDataFromUri(final Uri uri, final String apiKey) {
+    public ResponseVO downloadDataFromUri(final Uri uri) {
         HttpGet request = null;
         final ResponseVO responseVO = ResponseVO.createInstance();
         responseVO.setData(new byte[0]);
@@ -56,26 +56,13 @@ public class HTTPDownloaderImpl implements Downloader {
             Log.d(CLASS_NAME, "Response code: " + responseCode);
 
             responseVO.setResponseCode(responseCode);
+            responseVO.setHeaders(httpResponse.getAllHeaders());
+
             if (responseCode == 200) {
                 final HttpEntity entity = httpResponse.getEntity();
                 if (entity != null) {
                     try {
-                        final byte[] response = EntityUtils.toByteArray(entity);
-
-                        // Validate Response
-                        final ResponseValidator responseValidator
-                                = HttpResponseValidator.createInstance();
-                        responseValidator.setApiKey(apiKey);
-                        ((HttpResponseValidator) responseValidator).setHttpHeaders(
-                                httpResponse.getAllHeaders()
-                        );
-                        if (!responseValidator.isValid(response)) {
-                            // TODO : Probably it is necessary to improve this section
-                            responseVO.setResponseCode(401);
-                            return responseVO;
-                        }
-
-                        responseVO.setData(response);
+                        responseVO.setData(EntityUtils.toByteArray(entity));
                         return responseVO;
                     } catch (IOException e) {
                         Log.e(CLASS_NAME, "EntityUtils error: " + e.getMessage());

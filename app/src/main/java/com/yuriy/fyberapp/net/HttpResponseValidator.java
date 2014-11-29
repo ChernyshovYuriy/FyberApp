@@ -88,7 +88,7 @@ public class HttpResponseValidator implements ResponseValidator {
     /**
      * Factory method to instantiate {@link com.yuriy.fyberapp.net.HttpResponseValidator}
      *
-     * @return Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
+     * @return Instance of the {@link com.yuriy.fyberapp.net.HttpResponseValidator}
      */
     public static HttpResponseValidator createInstance() {
         return new HttpResponseValidator();

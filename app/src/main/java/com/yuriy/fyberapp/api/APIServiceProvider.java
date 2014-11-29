@@ -10,6 +10,7 @@ package com.yuriy.fyberapp.api;
 import android.net.Uri;
 
 import com.yuriy.fyberapp.net.Downloader;
+import com.yuriy.fyberapp.net.ResponseValidator;
 import com.yuriy.fyberapp.vo.OffersVO;
 
 /**
@@ -23,11 +24,11 @@ public interface APIServiceProvider {
     /**
      * Access current weather data for any location on Earth.
      *
-     * @param downloader Implementation of the {@link com.yuriy.fyberapp.net.Downloader}.
-     * @param uri        {@link android.net.Uri} of the request.
-     * @param apiKey     API Key.
+     * @param downloader        Implementation of the {@link com.yuriy.fyberapp.net.Downloader}.
+     * @param uri               {@link android.net.Uri} of the request.
+     * @param responseValidator Implementation of the {@link com.yuriy.fyberapp.net.ResponseValidator}.
      * @return {@link com.yuriy.fyberapp.vo.OffersVO}.
      */
     public OffersVO getCurrentOffers(final Downloader downloader, final Uri uri,
-                                     final String apiKey);
+                                     final ResponseValidator responseValidator);
 }

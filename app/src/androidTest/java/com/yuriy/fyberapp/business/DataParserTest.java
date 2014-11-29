@@ -7,12 +7,15 @@ import com.yuriy.fyberapp.ApplicationTest;
 import com.yuriy.fyberapp.api.APIServiceProvider;
 import com.yuriy.fyberapp.api.APIServiceProviderImpl;
 import com.yuriy.fyberapp.net.Downloader;
+import com.yuriy.fyberapp.net.ResponseValidator;
 import com.yuriy.fyberapp.vo.ResponseVO;
 
 import org.mockito.ArgumentCaptor;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyByte;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -54,11 +57,16 @@ public class DataParserTest extends InstrumentationTestCase {
         responseVO.setData(ApplicationTest.RAW_RESPONSE.getBytes());
 
         // when downloader asks to download data - return real data
-        when(mDownloader.downloadDataFromUri(Uri.parse(""), "")).thenReturn(responseVO);
+        when(mDownloader.downloadDataFromUri(Uri.parse(""))).thenReturn(responseVO);
     }
 
     public void testParseCurrentOffersCall() {
-        mServiceProvider.getCurrentOffers(mDownloader, Uri.parse(""), "");
+        final ResponseValidator validatorMock = mock(ResponseValidator.class);
+
+        // Mock the response of the validator, assume that it is true
+        when(validatorMock.isValid((byte[]) any())).thenReturn(true);
+
+        mServiceProvider.getCurrentOffers(mDownloader, Uri.parse(""), validatorMock);
 
         final ArgumentCaptor<String> codeCapture = ArgumentCaptor.forClass(String.class);
         final ArgumentCaptor<String> messageCapture = ArgumentCaptor.forClass(String.class);

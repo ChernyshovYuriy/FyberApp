@@ -20,7 +20,10 @@ import com.yuriy.fyberapp.business.DataParser;
 import com.yuriy.fyberapp.business.JSONDataParserImpl;
 import com.yuriy.fyberapp.net.Downloader;
 import com.yuriy.fyberapp.net.FakeDownloader;
+import com.yuriy.fyberapp.net.FakeResponseValidator;
 import com.yuriy.fyberapp.net.HTTPDownloaderImpl;
+import com.yuriy.fyberapp.net.HttpResponseValidator;
+import com.yuriy.fyberapp.net.ResponseValidator;
 import com.yuriy.fyberapp.vo.FyberResponseCode;
 import com.yuriy.fyberapp.vo.OfferVO;
 import com.yuriy.fyberapp.vo.OffersVO;
@@ -264,12 +267,20 @@ public class DownloadingService extends IntentService {
          */
         public OffersVO downloadOffers(final Uri uri, final boolean isUseFakeResponse,
                                        final String apiKey) {
+
             // Instantiate appropriate downloader (HTTP one)
             Downloader downloader = new HTTPDownloaderImpl();
+
+            // Validate Response
+            ResponseValidator responseValidator = HttpResponseValidator.createInstance();
+            responseValidator.setApiKey(apiKey);
+
             if (isUseFakeResponse) {
                 // Use fake downloader to simulate real response
                 downloader = FakeDownloader.createInstance();
                 ((FakeDownloader) downloader).setContext(getApplicationContext());
+
+                responseValidator = FakeResponseValidator.createInstance();
             }
 
             // Instantiate appropriate parse (JSON one)
@@ -279,7 +290,7 @@ public class DownloadingService extends IntentService {
             final APIServiceProvider serviceProvider = new APIServiceProviderImpl(dataParser);
 
             // Get and return Offers
-            return serviceProvider.getCurrentOffers(downloader, uri, apiKey);
+            return serviceProvider.getCurrentOffers(downloader, uri, responseValidator);
         }
 
         /**

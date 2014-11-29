@@ -1,6 +1,6 @@
 package com.yuriy.fyberapp.net;
 
-import com.yuriy.fyberapp.util.DeviceInfoHelper;
+import com.yuriy.fyberapp.utils.DeviceInfoHelper;
 import com.yuriy.fyberapp.vo.RequestParametersVO;
 
 import junit.framework.TestCase;

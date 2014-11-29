@@ -89,6 +89,13 @@ public class OffersVO extends BaseVO {
     }
 
     /**
+     * @return Copy of the collection of the Offers.
+     */
+    public List<OfferVO> getOffers() {
+        return new ArrayList<OfferVO>(mOfferVOs);
+    }
+
+    /**
      * Factory method to instantiate {@link com.yuriy.fyberapp.vo.OffersVO}
      *
      * @return Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}

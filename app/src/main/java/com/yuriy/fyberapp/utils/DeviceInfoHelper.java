@@ -1,4 +1,4 @@
-package com.yuriy.fyberapp.util;
+package com.yuriy.fyberapp.utils;
 
 /**
  * Created by Yuriy Chernyshov
@@ -8,7 +8,7 @@ package com.yuriy.fyberapp.util;
  */
 
 /**
- * {@link com.yuriy.fyberapp.util.DeviceInfoHelper} is a helper class that manage information
+ * {@link com.yuriy.fyberapp.utils.DeviceInfoHelper} is a helper class that manage information
  * about Mobile Device.
  */
 public class DeviceInfoHelper {

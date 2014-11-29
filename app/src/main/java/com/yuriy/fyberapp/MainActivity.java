@@ -1,6 +1,5 @@
 package com.yuriy.fyberapp;
 
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -8,19 +7,26 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.yuriy.fyberapp.service.DownloadingService;
-import com.yuriy.fyberapp.util.DeviceInfoHelper;
+import com.yuriy.fyberapp.list.OfferAdapter;
 import com.yuriy.fyberapp.net.UrlBuilder;
+import com.yuriy.fyberapp.service.DownloadingService;
+import com.yuriy.fyberapp.utils.DeviceInfoHelper;
+import com.yuriy.fyberapp.utils.ImageFetcher;
+import com.yuriy.fyberapp.utils.ImageFetcherFactory;
+import com.yuriy.fyberapp.vo.OfferVO;
 import com.yuriy.fyberapp.vo.OffersVO;
 import com.yuriy.fyberapp.vo.RequestParametersVO;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
     /**
      * Tag for the logging message.
@@ -37,6 +43,13 @@ public class MainActivity extends Activity {
      */
     private Handler mDownloadHandler = null;
 
+    private ImageFetcher mImageFetcher; // Handles loading the  image in a background thread
+
+    /**
+     * List adapter for the list of Offers.
+     */
+    private OfferAdapter mListAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +57,14 @@ public class MainActivity extends Activity {
 
         // Initialize the downloadHandler.
         mDownloadHandler = new DownloadHandler(this);
+
+        mImageFetcher = ImageFetcherFactory.getSmallImageFetcher(this);
+
+        // Create and set empty adapter
+        mListAdapter = new OfferAdapter(this, mImageFetcher);
+
+        final ListView listView = (ListView) findViewById(R.id.offers_list_view);
+        listView.setAdapter(mListAdapter);
     }
 
     @Override
@@ -53,6 +74,8 @@ public class MainActivity extends Activity {
         // Create an instance of the dialog fragment and show it
         final DialogFragment settingsDialog = new RequestParametersDialog();
         settingsDialog.show(getFragmentManager(), RequestParametersDialog.FRAGMENT_TAG);
+
+        mListAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -75,6 +98,21 @@ public class MainActivity extends Activity {
     }
 
     /**
+     * Add collection of the {@link com.yuriy.fyberapp.vo.OfferVO}'s into adapter.
+     * @param data Collection of the {@link com.yuriy.fyberapp.vo.OfferVO}
+     */
+    private void setListAdapterData(final List<OfferVO> data) {
+        final ListView listView = (ListView) findViewById(R.id.offers_list_view);
+        if (listView == null) {
+            return;
+        }
+        listView.setVisibility(View.VISIBLE);
+
+        mListAdapter.addItems(data);
+        mListAdapter.notifyDataSetChanged();
+    }
+
+    /**
      * Callback method that is called from the {@link com.yuriy.fyberapp.RequestParametersDialog}.
      *
      * @param apiKey API Key
@@ -86,6 +124,9 @@ public class MainActivity extends Activity {
                                                 final String appId, final String pub0) {
 
         hideResponseErrorMessage();
+
+        final ListView listView = (ListView) findViewById(R.id.offers_list_view);
+        listView.setVisibility(View.GONE);
 
         showDialog("Download Offers");
 
@@ -177,12 +218,27 @@ public class MainActivity extends Activity {
 
             switch (what) {
                 case DownloadingService.ServiceHandler.MSG_MAKE_REQUEST:
+                    // Get Offers VO
                     final OffersVO offersVO = DownloadingService.getOffers(message);
+                    // Check it for the NULL value
                     if (offersVO == null)
                         return;
+                    // If response is not successful - show error message
                     if (!DownloadingService.isResponseCodeOK(offersVO)) {
-                        activity.showResponseErrorMessage(
-                                DownloadingService.getResponseMessage(offersVO));
+                        // Get error message from the Offer VO by passing it to the service.
+                        // This is allows to separate UI from the any non UI logic.
+                        String errorMessage = DownloadingService.getResponseMessage(offersVO);
+                        if (errorMessage.isEmpty()) {
+                            errorMessage = "Error " + DownloadingService.getResponseCode(offersVO)
+                                    + " during request";
+                        }
+                        // This is simple way to inform UI about un-successful result
+                        // This is a good place to implement Command pattern in order to
+                        // show appropriate view which is depends on the return Error Code or
+                        // Error Message
+                        activity.showResponseErrorMessage(errorMessage);
+                    } else {
+                        activity.setListAdapterData(DownloadingService.getOffers(offersVO));
                     }
                     break;
 

@@ -16,4 +16,10 @@
         android:textSize="20sp"
         android:visibility="gone"/>
 
+    <ListView
+        android:id="@+id/offers_list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
 </RelativeLayout>

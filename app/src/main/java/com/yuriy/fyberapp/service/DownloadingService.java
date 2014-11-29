@@ -14,14 +14,19 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.yuriy.fyberapp.R;
 import com.yuriy.fyberapp.api.APIServiceProvider;
 import com.yuriy.fyberapp.api.APIServiceProviderImpl;
 import com.yuriy.fyberapp.business.DataParser;
 import com.yuriy.fyberapp.business.JSONDataParserImpl;
 import com.yuriy.fyberapp.net.Downloader;
 import com.yuriy.fyberapp.net.HTTPDownloaderImpl;
+import com.yuriy.fyberapp.utils.AppUtils;
 import com.yuriy.fyberapp.vo.FyberResponseCode;
+import com.yuriy.fyberapp.vo.OfferVO;
 import com.yuriy.fyberapp.vo.OffersVO;
+
+import java.util.List;
 
 /**
  * Created by Yuriy Chernyshov
@@ -144,6 +149,19 @@ public class DownloadingService extends IntentService {
     }
 
     /**
+     * Helper method to extract response code from the {@link com.yuriy.fyberapp.vo.OffersVO}.
+     *
+     * @param offersVO Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
+     * @return Response Message.
+     */
+    public static String getResponseCode(final OffersVO offersVO) {
+        if (offersVO.getCode() == null) {
+            return "";
+        }
+        return offersVO.getCode();
+    }
+
+    /**
      * Helper method to validate response.
      *
      * @param offersVO Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
@@ -151,7 +169,18 @@ public class DownloadingService extends IntentService {
      */
     public static boolean isResponseCodeOK(final OffersVO offersVO) {
         return offersVO.getCode() != null
-                && offersVO.getCode().equals(FyberResponseCode.OK.toString());
+                && offersVO.getCode().trim().equals(FyberResponseCode.OK.toString());
+    }
+
+    /**
+     * Helper method to extract collection of the Offers from the
+     * {@link com.yuriy.fyberapp.vo.OffersVO}.
+     *
+     * @param offersVO Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
+     * @return Collection of the Offers.
+     */
+    public static List<OfferVO> getOffers(final OffersVO offersVO) {
+        return offersVO.getOffers();
     }
 
     /**
@@ -221,7 +250,8 @@ public class DownloadingService extends IntentService {
             final APIServiceProvider serviceProvider = new APIServiceProviderImpl(dataParser);
 
             // Get and return Offers
-            return serviceProvider.getCurrentOffers(downloader, uri);
+            return ((APIServiceProviderImpl)serviceProvider).getFakeOffers(downloader, uri,
+                    AppUtils.getStringResource(R.raw.response, getApplicationContext()));
         }
 
         /**

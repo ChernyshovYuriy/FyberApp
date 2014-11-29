@@ -19,6 +19,9 @@ import java.util.List;
  */
 public class APIServiceProviderImpl implements APIServiceProvider {
 
+    /**
+     * Tag string to use in logging messages.
+     */
     private static final String CLASS_NAME = APIServiceProviderImpl.class.getSimpleName();
 
     /**
@@ -26,6 +29,11 @@ public class APIServiceProviderImpl implements APIServiceProvider {
      * parse raw response of the data into different formats.
      */
     private DataParser mDataParser;
+
+    /**
+     * This field holds fake result data which is helpful when debug application.
+     */
+    private String mFakeResult;
 
     /**
      * Constructor.
@@ -39,8 +47,23 @@ public class APIServiceProviderImpl implements APIServiceProvider {
         mDataParser = dataParser;
     }
 
+    /**
+     * This method allows to test functionality of the response processing py the providing fake
+     * data as response.
+     * @param downloader   Implementation of the {@link com.yuriy.fyberapp.net.Downloader}
+     * @param uri          Provided Uri.
+     * @param fakeResponse Fake response.
+     * @return {@link com.yuriy.fyberapp.vo.OffersVO}
+     */
+    public OffersVO getFakeOffers(final Downloader downloader, final Uri uri,
+                                     final String fakeResponse) {
+        mFakeResult = fakeResponse;
+
+        return getCurrentOffers(downloader, uri);
+    }
+
     @Override
-    public OffersVO getCurrentOffers(Downloader downloader, Uri uri) {
+    public OffersVO getCurrentOffers(final Downloader downloader, final Uri uri) {
         // Initialize return object.
         final OffersVO offersVO = OffersVO.createInstance();
 
@@ -56,7 +79,13 @@ public class APIServiceProviderImpl implements APIServiceProvider {
             return offersVO;
         }
 
-        final String response = new String(responseBytes);
+        //final String response = new String(responseBytes);
+
+        String response = new String(responseBytes);
+        if (mFakeResult != null && !mFakeResult.isEmpty()) {
+            response = mFakeResult;
+        }
+
         Log.i(CLASS_NAME, "Offers Response:\n" + response);
 
         // Ignore empty response
@@ -83,8 +112,9 @@ public class APIServiceProviderImpl implements APIServiceProvider {
 
         // Extract Offers
         final List<OfferVO> collection = mDataParser.getOffers(response);
-        for (OfferVO offerVO : collection) {
-            offersVO.addOfferVO(offerVO);
+        for (OfferVO offer : collection) {
+            Log.d("", "Offer:" + offer.getTitle());
+            offersVO.addOfferVO(offer);
         }
 
         return offersVO;

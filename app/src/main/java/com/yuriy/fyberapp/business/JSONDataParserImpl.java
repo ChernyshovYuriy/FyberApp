@@ -32,7 +32,7 @@ public class JSONDataParserImpl implements DataParser {
     private static final String CLASS_NAME = JSONDataParserImpl.class.getSimpleName();
 
     @Override
-    public String getCode(String inputData) {
+    public String getCode(final String inputData) {
         final JSONObject mainJSON = getJSONFromRawData(inputData);
         if (mainJSON.length() == 0) {
             // TODO : Implement return some default value of the response code
@@ -48,7 +48,7 @@ public class JSONDataParserImpl implements DataParser {
     }
 
     @Override
-    public String getMessage(String inputData) {
+    public String getMessage(final String inputData) {
         final JSONObject mainJSON = getJSONFromRawData(inputData);
         if (mainJSON.length() == 0) {
             // TODO : Implement return some default value of the response message
@@ -64,7 +64,7 @@ public class JSONDataParserImpl implements DataParser {
     }
 
     @Override
-    public List<OfferVO> getOffers(String inputData) {
+    public List<OfferVO> getOffers(final String inputData) {
         final List<OfferVO> offersItems = new ArrayList<OfferVO>();
         final JSONObject jsonObject = getJSONFromRawData(inputData);
         if (!jsonObject.has(OffersVO.KEY_OFFERS)) {
@@ -159,32 +159,5 @@ public class JSONDataParserImpl implements DataParser {
                     + e.getMessage());
         }
         return jsonArray;
-    }
-
-    /**
-     * This method allows extract JSON Object from the main JSON Object.
-     *
-     * @param inputData Raw input data.
-     * @param key       Key which is used to find a JSON Object.
-     * @return Found JSON Object or empty one.
-     */
-    private JSONObject getJSONObjectFromMainJSONObject(final String inputData, final String key) {
-        final JSONObject mainJSON = getJSONFromRawData(inputData);
-        JSONObject returnJSON = new JSONObject();
-        if (key == null) {
-            return returnJSON;
-        }
-        if (mainJSON.length() == 0) {
-            return returnJSON;
-        }
-        if (!mainJSON.has(key)) {
-            return returnJSON;
-        }
-        try {
-            returnJSON = mainJSON.getJSONObject(key);
-        } catch (JSONException e) {
-            Log.e(CLASS_NAME, "Parse " + key + " from main JSON exception:" + e.getMessage());
-        }
-        return returnJSON;
     }
 }

@@ -117,14 +117,14 @@ public class DownloadingService extends IntentService {
                                            final String apiKey,
                                            final boolean useFakeResponse,
                                            final Handler downloadHandler) {
-        // Create the Intent that's associated to the WeatherService class.
+        // Create the Intent that's associated to the DownloadingService class.
         final Intent intent = new Intent(context, DownloadingService.class);
 
         // Set the URI as data in the Intent.
         intent.setData(uri);
 
         // Create and pass a Messenger as an "extra" so the
-        // WeatherService can send back the pathname.
+        // DownloadingService can send back the pathname.
         if (downloadHandler != null) {
             intent.putExtra(BUNDLE_KEY_MESSENGER, new Messenger(downloadHandler));
         }
@@ -145,14 +145,14 @@ public class DownloadingService extends IntentService {
         // of a Bundle that can be passed across processes.
         final Bundle data = message.getData();
 
-        // Extract the Weather VO from the Bundle.
-        final OffersVO currentWeatherVO = (OffersVO) data.get(BUNDLE_KEY_OFFERS);
+        // Extract the Offer VO from the Bundle.
+        final OffersVO offers = (OffersVO) data.get(BUNDLE_KEY_OFFERS);
 
         // Check to see if the download succeeded.
-        if (message.arg1 != Activity.RESULT_OK || currentWeatherVO == null)
+        if (message.arg1 != Activity.RESULT_OK || offers == null)
             return null;
         else
-            return currentWeatherVO;
+            return offers;
     }
 
     /**
@@ -231,15 +231,15 @@ public class DownloadingService extends IntentService {
         public void handleMessage(final Message message) {
             // Download the data and reply to the
             // MainActivity via the Messenger sent with the Intent.
-            downloadWeatherDataAndReply((Intent) message.obj);
+            downloadOffersDataAndReply((Intent) message.obj);
         }
 
         /**
-         * Retrieves the designated weather data and reply to the
+         * Retrieves the designated offer data and reply to the
          * {@link com.yuriy.fyberapp.MainActivity} via the {@link android.os.Messenger}
          * sent with the {@link android.content.Intent}.
          */
-        private void downloadWeatherDataAndReply(final Intent intent) {
+        private void downloadOffersDataAndReply(final Intent intent) {
             Log.i(CLASS_NAME, "Request URL:" + intent.getData().toString());
 
             // Extract the Messenger.
@@ -261,7 +261,7 @@ public class DownloadingService extends IntentService {
          * Download the requested data and return the instance of the
          * {@link com.yuriy.fyberapp.vo.OffersVO} .
          *
-         * @param uri    URI of the weather data.
+         * @param uri    URI of the offer data.
          * @return       Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
          * @param apiKey API Key
          */
@@ -301,7 +301,7 @@ public class DownloadingService extends IntentService {
          */
         private void sendOffers(final Messenger messenger, final OffersVO offersVO) {
             // Call factory method to create Message.
-            final Message message = makeReplyMessageWithWeatherData(offersVO);
+            final Message message = makeReplyMessageWithOfferData(offersVO);
 
             try {
                 // Send offersVO to back to the DownloadActivity.
@@ -319,7 +319,7 @@ public class DownloadingService extends IntentService {
          *
          * @param offersVO Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
          */
-        private Message makeReplyMessageWithWeatherData(final OffersVO offersVO) {
+        private Message makeReplyMessageWithOfferData(final OffersVO offersVO) {
             final Message message = Message.obtain();
 
             // Return the result to indicate whether the download
@@ -330,7 +330,7 @@ public class DownloadingService extends IntentService {
 
             final Bundle data = new Bundle();
 
-            // Data of the downloaded weather.
+            // Data of the downloaded offer.
             data.putSerializable(BUNDLE_KEY_OFFERS, offersVO);
             message.setData(data);
             return message;
@@ -338,7 +338,7 @@ public class DownloadingService extends IntentService {
 
         /**
          * A factory method that creates a {@link android.os.Message} that contains
-         * information on the weather data to download.
+         * information on the data to download.
          */
         private Message makeDownloadDataMessage(final Intent intent) {
 

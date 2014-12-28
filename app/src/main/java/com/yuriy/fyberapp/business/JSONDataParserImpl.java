@@ -115,7 +115,7 @@ public class JSONDataParserImpl implements DataParser {
                 offersItems.add(offerItem);
             }
         } catch (JSONException e) {
-            Log.e(CLASS_NAME, "Parse weather conditions exception:" + e.getMessage());
+            Log.e(CLASS_NAME, "Parse offers exception:" + e.getMessage());
         }
         return offersItems;
     }
@@ -123,7 +123,7 @@ public class JSONDataParserImpl implements DataParser {
     /**
      * This method converts raw data which comes from the server into the JSON object.
      *
-     * @param rawData Raw data from the weather server.
+     * @param rawData Raw data from the server.
      * @return Instance of the {@link org.json.JSONObject}.
      */
     protected JSONObject getJSONFromRawData(final String rawData) {

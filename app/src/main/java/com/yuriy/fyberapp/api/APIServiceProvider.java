@@ -22,7 +22,7 @@ import com.yuriy.fyberapp.vo.OffersVO;
 public interface APIServiceProvider {
 
     /**
-     * Access current weather data for any location on Earth.
+     * Access current offer data for any location on Earth.
      *
      * @param downloader        Implementation of the {@link com.yuriy.fyberapp.net.Downloader}.
      * @param uri               {@link android.net.Uri} of the request.

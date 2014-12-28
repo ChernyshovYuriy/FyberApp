@@ -191,7 +191,7 @@ public class MainActivity extends FragmentActivity {
         // Build request url
         final String url = UrlBuilder.getUrlForRequest(requestParametersVO, apiKey);
 
-        // Create an Intent to download weather data in the background via a Service.
+        // Create an Intent to download offer data in the background via a Service.
         // The downloaded data is later displayed in the
         // UI Thread via the downloadHandler() method defined below.
         final Intent intent = DownloadingService.makeRequestIntent(this,

@@ -5,10 +5,8 @@ package com.yuriy.fyberapp.net;
  * At Android Studio
  * On 11/29/14
  * E-Mail: chernyshov.yuriy@gmail.com
- */
-
-/**
- * {@link com.yuriy.fyberapp.net.FakeResponseValidator} is a helper class to help pass validation
+ *
+ * {@link FakeResponseValidator} is a helper class to help pass validation
  * in case of fake response
  */
 public class FakeResponseValidator implements ResponseValidator {
@@ -29,9 +27,9 @@ public class FakeResponseValidator implements ResponseValidator {
     private FakeResponseValidator() { }
 
     /**
-     * Factory method to instantiate {@link com.yuriy.fyberapp.net.FakeResponseValidator}
+     * Factory method to instantiate {@link FakeResponseValidator}
      *
-     * @return Instance of the {@link com.yuriy.fyberapp.net.FakeResponseValidator}
+     * @return Instance of the {@link FakeResponseValidator}
      */
     public static FakeResponseValidator createInstance() {
         return new FakeResponseValidator();

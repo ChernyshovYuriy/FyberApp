@@ -17,14 +17,14 @@ public class ListAdapterData<T> implements Serializable {
 
     /**
      * Constructor
-     * @param comparator {@link java.util.Comparator} to implement sorting
+     * @param comparator {@link Comparator} to implement sorting
      */
     public ListAdapterData(Comparator<T> comparator) {
         if (comparator != null) {
             // TODO: Implement sorting algorithm here
-            mItems = new ArrayList<T>();
+            mItems = new ArrayList<>();
         } else {
-            mItems = new ArrayList<T>();
+            mItems = new ArrayList<>();
         }
     }
 

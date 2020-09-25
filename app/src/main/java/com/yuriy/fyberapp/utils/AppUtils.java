@@ -3,8 +3,9 @@ package com.yuriy.fyberapp.utils;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
-import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
+
+import androidx.fragment.app.FragmentActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,10 +16,8 @@ import java.io.InputStream;
  * At Android Studio
  * On 11/29/14
  * E-Mail: chernyshov.yuriy@gmail.com
- */
-
-/**
- * {@link com.yuriy.fyberapp.utils.AppUtils} is a helper class which holds various help-methods
+ *
+ * {@link AppUtils} is a helper class which holds various help-methods
  */
 public class AppUtils {
 
@@ -28,34 +27,27 @@ public class AppUtils {
      * @param id      Identifier of the resource.
      * @param context Application context.
      * @return Bytes array associated with a resource
-     * @throws IOException
      */
     public static byte[] getResource(final int id, final Context context) {
         final Resources resources = context.getResources();
-        final InputStream is = resources.openRawResource(id);
-        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        final byte[] readBuffer = new byte[4 * 1024];
 
-        try {
+        try (InputStream is = resources.openRawResource(id)) {
+            final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+            final byte[] readBuffer = new byte[4 * 1024];
             int read;
             do {
                 read = is.read(readBuffer, 0, readBuffer.length);
-                if(read == -1) {
+                if (read == -1) {
                     break;
                 }
                 bout.write(readBuffer, 0, read);
-            } while(true);
+            } while (true);
 
             return bout.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                /* Ignore */
-            }
         }
+        /* Ignore */
         return new byte[0];
     }
 
@@ -85,14 +77,13 @@ public class AppUtils {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
     }
 
-    public static int gettHeightScreenSize(FragmentActivity context) {
+    public static int getHeightScreenSize(FragmentActivity context) {
         // Fetch screen height and width, to use as our max size when loading images as this
         // activity runs full screen
         final DisplayMetrics displayMetrics = new DisplayMetrics();
         context.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        final int height = displayMetrics.heightPixels;
 
-        return height;
+        return displayMetrics.heightPixels;
     }
 
     public static int getWidthScreenSize(FragmentActivity context) {
@@ -100,9 +91,8 @@ public class AppUtils {
         // activity runs full screen
         final DisplayMetrics displayMetrics = new DisplayMetrics();
         context.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        final int width = displayMetrics.widthPixels;
 
-        return width;
+        return displayMetrics.widthPixels;
     }
 
     public static int getLongestScreenSize(FragmentActivity context) {
@@ -120,6 +110,6 @@ public class AppUtils {
         // cache.
         // TODO
 
-        return height > width ? height : width;
+        return Math.max(height, width);
     }
 }

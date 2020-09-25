@@ -12,10 +12,8 @@ import com.yuriy.fyberapp.vo.ResponseVO;
  * At Android Studio
  * On 11/29/14
  * E-Mail: chernyshov.yuriy@gmail.com
- */
-
-/**
- * {@link com.yuriy.fyberapp.net.FakeDownloader} is a helper class which provides ability to
+ *
+ * {@link FakeDownloader} is a helper class which provides ability to
  * simulate real data response.
  */
 public class FakeDownloader implements Downloader {
@@ -50,9 +48,9 @@ public class FakeDownloader implements Downloader {
     }
 
     /**
-     * Factory method to instantiate {@link com.yuriy.fyberapp.net.FakeDownloader}
+     * Factory method to instantiate {@link FakeDownloader}
      *
-     * @return Instance of the {@link com.yuriy.fyberapp.net.FakeDownloader}
+     * @return Instance of the {@link FakeDownloader}
      */
     public static FakeDownloader createInstance() {
         return new FakeDownloader();

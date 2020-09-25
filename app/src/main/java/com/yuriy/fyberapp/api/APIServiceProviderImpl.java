@@ -27,15 +27,15 @@ public class APIServiceProviderImpl implements APIServiceProvider {
     private static final String CLASS_NAME = APIServiceProviderImpl.class.getSimpleName();
 
     /**
-     * Implementation of the {@link com.yuriy.fyberapp.business.DataParser} allows to
+     * Implementation of the {@link DataParser} allows to
      * parse raw response of the data into different formats.
      */
-    private DataParser mDataParser;
+    private final DataParser mDataParser;
 
     /**
      * Constructor.
      *
-     * @param dataParser Implementation of the {@link com.yuriy.fyberapp.business.DataParser}.
+     * @param dataParser Implementation of the {@link DataParser}.
      */
     public APIServiceProviderImpl(final DataParser dataParser) {
         if (dataParser == null) {
@@ -85,7 +85,7 @@ public class APIServiceProviderImpl implements APIServiceProvider {
         // Ignore empty response
         if (response.isEmpty()) {
             Log.w(CLASS_NAME, "Can not parse offers data, response is empty");
-            
+
             if (responseVO.getResponseCode() != 0) {
                 offersVO.setCode(String.valueOf(responseVO.getResponseCode()));
             }
@@ -116,7 +116,7 @@ public class APIServiceProviderImpl implements APIServiceProvider {
     /**
      * Get response from the server.
      *
-     * @param downloader Implementation of the {@link com.yuriy.fyberapp.net.Downloader}
+     * @param downloader Implementation of the {@link Downloader}
      * @param uri        Provided Uri
      * @return Downloaded data as bytes array.
      */

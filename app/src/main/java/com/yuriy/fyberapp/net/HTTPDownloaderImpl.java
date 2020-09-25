@@ -20,10 +20,8 @@ import java.io.IOException;
  * At Android Studio
  * On 11/21/14
  * E-Mail: chernyshov.yuriy@gmail.com
- */
-
-/**
- * Implementation of the {@link com.yuriy.fyberapp.net.Downloader} interface.
+ *
+ * Implementation of the {@link Downloader} interface.
  * {@link HTTPDownloaderImpl} allows to download offers data from the
  * wer resource over HTTP protocol.
  */

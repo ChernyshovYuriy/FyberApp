@@ -44,24 +44,24 @@ public class DownloadingService extends IntentService {
     private static final String CLASS_NAME = DownloadingService.class.getSimpleName();
 
     /**
-     * Key for the {@link android.os.Bundle} store to hold a {@link android.os.Messenger}
+     * Key for the {@link Bundle} store to hold a {@link Messenger}
      */
     protected static final String BUNDLE_KEY_MESSENGER = "MESSENGER";
 
     /**
-     * Key for the {@link android.os.Bundle} store to indicates whether it is necessary
+     * Key for the {@link Bundle} store to indicates whether it is necessary
      * to use fake response
      */
     protected static final String BUNDLE_KEY_USE_FAKE_RESPONSE = "USE_FAKE_RESPONSE";
 
     /**
-     * Key for the {@link android.os.Bundle} store to hold API Key.
+     * Key for the {@link Bundle} store to hold API Key.
      */
     protected static final String BUNDLE_KEY_API_KEY = "API_KEY";
 
     /**
-     * Key for the {@link android.os.Bundle} store to hold a
-     * {@link com.yuriy.fyberapp.vo.OffersVO}
+     * Key for the {@link Bundle} store to hold a
+     * {@link OffersVO}
      */
     private static final String BUNDLE_KEY_OFFERS = "OFFERS";
 
@@ -93,6 +93,15 @@ public class DownloadingService extends IntentService {
         // Get the HandlerThread's Looper and use it for our Handler.
         mServiceLooper = thread.getLooper();
         mServiceHandler = new ServiceHandler(mServiceLooper);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Quit looper associated with this handler.
+        if (mServiceLooper != null) {
+            mServiceLooper.quit();
+        }
     }
 
     @Override
@@ -137,7 +146,7 @@ public class DownloadingService extends IntentService {
     }
 
     /**
-     * Helper method that returns {@link com.yuriy.fyberapp.vo.OffersVO}
+     * Helper method that returns {@link OffersVO}
      * if download succeeded.
      */
     public static OffersVO getOffers(final Message message) {
@@ -156,9 +165,9 @@ public class DownloadingService extends IntentService {
     }
 
     /**
-     * Helper method to extract response message from the {@link com.yuriy.fyberapp.vo.OffersVO}.
+     * Helper method to extract response message from the {@link OffersVO}.
      *
-     * @param offersVO Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
+     * @param offersVO Instance of the {@link OffersVO}
      * @return Response Message.
      */
     public static String getResponseMessage(final OffersVO offersVO) {
@@ -169,9 +178,9 @@ public class DownloadingService extends IntentService {
     }
 
     /**
-     * Helper method to extract response code from the {@link com.yuriy.fyberapp.vo.OffersVO}.
+     * Helper method to extract response code from the {@link OffersVO}.
      *
-     * @param offersVO Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
+     * @param offersVO Instance of the {@link OffersVO}
      * @return Response Message.
      */
     public static String getResponseCode(final OffersVO offersVO) {
@@ -184,7 +193,7 @@ public class DownloadingService extends IntentService {
     /**
      * Helper method to validate response.
      *
-     * @param offersVO Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
+     * @param offersVO Instance of the {@link OffersVO}
      * @return True of response return OK message, False - otherwise.
      */
     public static boolean isResponseCodeOK(final OffersVO offersVO) {
@@ -194,9 +203,9 @@ public class DownloadingService extends IntentService {
 
     /**
      * Helper method to extract collection of the Offers from the
-     * {@link com.yuriy.fyberapp.vo.OffersVO}.
+     * {@link OffersVO}.
      *
-     * @param offersVO Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
+     * @param offersVO Instance of the {@link OffersVO}
      * @return Collection of the Offers.
      */
     public static List<OfferVO> getOffers(final OffersVO offersVO) {
@@ -204,9 +213,9 @@ public class DownloadingService extends IntentService {
     }
 
     /**
-     * An inner class that inherits from {@link android.os.Handler} and uses its
-     * {@link #handleMessage(android.os.Message)} hook method to process Messages sent to
-     * it from {@link #onHandleIntent(android.content.Intent)} that indicate which
+     * An inner class that inherits from {@link Handler} and uses its
+     * {@link #handleMessage(Message)} hook method to process Messages sent to
+     * it from {@link #onHandleIntent(Intent)} that indicate which
      * data to download.
      */
     public final class ServiceHandler extends Handler {
@@ -228,6 +237,7 @@ public class DownloadingService extends IntentService {
         /**
          * Hook method that retrieves an image from a remote server.
          */
+        @Override
         public void handleMessage(final Message message) {
             // Download the data and reply to the
             // MainActivity via the Messenger sent with the Intent.
@@ -236,8 +246,8 @@ public class DownloadingService extends IntentService {
 
         /**
          * Retrieves the designated offer data and reply to the
-         * {@link com.yuriy.fyberapp.MainActivity} via the {@link android.os.Messenger}
-         * sent with the {@link android.content.Intent}.
+         * {@link com.yuriy.fyberapp.MainActivity} via the {@link Messenger}
+         * sent with the {@link Intent}.
          */
         private void downloadOffersDataAndReply(final Intent intent) {
             Log.i(CLASS_NAME, "Request URL:" + intent.getData().toString());
@@ -259,10 +269,10 @@ public class DownloadingService extends IntentService {
 
         /**
          * Download the requested data and return the instance of the
-         * {@link com.yuriy.fyberapp.vo.OffersVO} .
+         * {@link OffersVO} .
          *
          * @param uri    URI of the offer data.
-         * @return       Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
+         * @return       Instance of the {@link OffersVO}
          * @param apiKey API Key
          */
         public OffersVO downloadOffers(final Uri uri, final boolean isUseFakeResponse,
@@ -296,8 +306,8 @@ public class DownloadingService extends IntentService {
         /**
          * Send the offersVO back to the DownloadActivity via the Messenger.
          *
-         * @param messenger {@link android.os.Messenger}
-         * @param offersVO {@link com.yuriy.fyberapp.vo.OffersVO}
+         * @param messenger {@link Messenger}
+         * @param offersVO {@link OffersVO}
          */
         private void sendOffers(final Messenger messenger, final OffersVO offersVO) {
             // Call factory method to create Message.
@@ -315,9 +325,9 @@ public class DownloadingService extends IntentService {
         /**
          * A factory method that creates a Message to return to the
          * {@link com.yuriy.fyberapp.MainActivity} with the
-         * {@link com.yuriy.fyberapp.vo.OffersVO} of the downloaded data.
+         * {@link OffersVO} of the downloaded data.
          *
-         * @param offersVO Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
+         * @param offersVO Instance of the {@link OffersVO}
          */
         private Message makeReplyMessageWithOfferData(final OffersVO offersVO) {
             final Message message = Message.obtain();
@@ -337,7 +347,7 @@ public class DownloadingService extends IntentService {
         }
 
         /**
-         * A factory method that creates a {@link android.os.Message} that contains
+         * A factory method that creates a {@link Message} that contains
          * information on the data to download.
          */
         private Message makeDownloadDataMessage(final Intent intent) {

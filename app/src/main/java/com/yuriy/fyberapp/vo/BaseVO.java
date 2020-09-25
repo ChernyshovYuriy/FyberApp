@@ -1,19 +1,17 @@
 package com.yuriy.fyberapp.vo;
 
-/**
- * Created by Yuriy Chernyshov
- * At Android Studio
- * On 11/28/14
- * E-Mail: chernyshov.yuriy@gmail.com
- */
-
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
 /**
- * {@link com.yuriy.fyberapp.vo.BaseVO} is a base class to provide ability to perform
+ * Created by Yuriy Chernyshov
+ * At Android Studio
+ * On 11/28/14
+ * E-Mail: chernyshov.yuriy@gmail.com
+ *
+ * {@link BaseVO} is a base class to provide ability to perform
  * Value Objects implementation. Values are storing in the map.
  */
 public abstract class BaseVO implements Serializable {
@@ -22,7 +20,7 @@ public abstract class BaseVO implements Serializable {
      * Map which is keep pairs of the key - value, where 'key' is a name of the parameter
      * and 'value' is its value.
      */
-    private final Map<String, Object> parametersMap = new TreeMap<String, Object>();
+    private final Map<String, Object> parametersMap = new TreeMap<>();
 
     /**
      * Return parameter from the map by the provided key.

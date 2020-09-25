@@ -1,16 +1,14 @@
 package com.yuriy.fyberapp.vo;
 
+import java.util.Set;
+
 /**
  * Created by Yuriy Chernyshov
  * At Android Studio
  * On 11/27/14
  * E-Mail: chernyshov.yuriy@gmail.com
- */
-
-import java.util.Set;
-
-/**
- * {@link com.yuriy.fyberapp.vo.RequestParametersVO} is a Value Object which holds
+ *
+ * {@link RequestParametersVO} is a Value Object which holds
  * parameters for the API request.
  */
 public class RequestParametersVO extends BaseVO {
@@ -237,8 +235,8 @@ public class RequestParametersVO extends BaseVO {
     }
 
     /**
-     * Factory method to create instance of the {@link com.yuriy.fyberapp.vo.RequestParametersVO}.
-     * @return Instance of the {@link com.yuriy.fyberapp.vo.RequestParametersVO}
+     * Factory method to create instance of the {@link RequestParametersVO}.
+     * @return Instance of the {@link RequestParametersVO}
      */
     public static RequestParametersVO createInstance() {
         return new RequestParametersVO();

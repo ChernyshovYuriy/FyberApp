@@ -5,10 +5,8 @@ package com.yuriy.fyberapp.vo;
  * At Android Studio
  * On 11/29/14
  * E-Mail: chernyshov.yuriy@gmail.com
- */
-
-/**
- * {@link com.yuriy.fyberapp.vo.FyberResponseCode} is an enumeration of the response codes
+ *
+ * {@link FyberResponseCode} is an enumeration of the response codes
  * from the Fyber service.
  */
 public enum FyberResponseCode {

@@ -1,13 +1,12 @@
 package com.yuriy.fyberapp.list;
 
 import android.app.Activity;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.yuriy.fyberapp.R;
 import com.yuriy.fyberapp.utils.ImageFetcher;
@@ -24,15 +23,15 @@ import java.util.List;
 public class OfferAdapter extends BaseAdapter {
 
     private ListAdapterViewHolder mViewHolder;
-    private Activity mCurrentActivity;
-    private ImageFetcher mImageFetcher;
-    private final ListAdapterData<OfferVO> mAdapterData = new ListAdapterData<OfferVO>(null);
+    private final Activity mCurrentActivity;
+    private final ImageFetcher mImageFetcher;
+    private final ListAdapterData<OfferVO> mAdapterData = new ListAdapterData<>(null);
 
     /**
      * Constructor.
      *
      * @param activity     current {@link android.app.Activity}
-     * @param imageFetcher {@link com.yuriy.fyberapp.utils.ImageFetcher} instance
+     * @param imageFetcher {@link ImageFetcher} instance
      */
     public OfferAdapter(final FragmentActivity activity, final ImageFetcher imageFetcher) {
         mCurrentActivity = activity;
@@ -71,16 +70,16 @@ public class OfferAdapter extends BaseAdapter {
     }
 
     /**
-     * Add {@link com.yuriy.fyberapp.vo.OfferVO} into the collection.
-     * @param value {@link com.yuriy.fyberapp.vo.OfferVO}
+     * Add {@link OfferVO} into the collection.
+     * @param value {@link OfferVO}
      */
     public void addItem(final OfferVO value) {
         mAdapterData.addItem(value);
     }
 
     /**
-     * Add {@link com.yuriy.fyberapp.vo.OfferVO}s into the collection.
-     * @param items Collection of the {@link com.yuriy.fyberapp.vo.OfferVO}
+     * Add {@link OfferVO}s into the collection.
+     * @param items Collection of the {@link OfferVO}
      */
     public void addItems(final List<OfferVO> items) {
         for (OfferVO item : items) {
@@ -128,10 +127,10 @@ public class OfferAdapter extends BaseAdapter {
      */
     private ListAdapterViewHolder createViewHolder(final View view) {
         final ListAdapterViewHolder viewHolder = new ListAdapterViewHolder();
-        viewHolder.mTitleView = (TextView) view.findViewById(R.id.title_view);
-        viewHolder.mTeaser = (TextView) view.findViewById(R.id.teaser_view);
-        viewHolder.mPayout = (TextView) view.findViewById(R.id.payout_view);
-        viewHolder.mThumbHires = (ImageView) view.findViewById(R.id.img_view);
+        viewHolder.mTitleView = view.findViewById(R.id.title_view);
+        viewHolder.mTeaser = view.findViewById(R.id.teaser_view);
+        viewHolder.mPayout = view.findViewById(R.id.payout_view);
+        viewHolder.mThumbHires = view.findViewById(R.id.img_view);
         return viewHolder;
     }
 }

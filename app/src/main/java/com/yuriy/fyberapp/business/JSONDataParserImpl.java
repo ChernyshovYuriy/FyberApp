@@ -1,12 +1,5 @@
 package com.yuriy.fyberapp.business;
 
-/**
- * Created by Yuriy Chernyshov
- * At Android Studio
- * On 11/22/14
- * E-Mail: chernyshov.yuriy@gmail.com
- */
-
 import android.util.Log;
 
 import com.yuriy.fyberapp.vo.OfferVO;
@@ -20,8 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link com.yuriy.fyberapp.business.JSONDataParserImpl} is implementation of the
- * {@link com.yuriy.fyberapp.business.DataParser} interface and allows to parse raw
+ * Created by Yuriy Chernyshov
+ * At Android Studio
+ * On 11/22/14
+ * E-Mail: chernyshov.yuriy@gmail.com
+ *
+ * {@link JSONDataParserImpl} is implementation of the
+ * {@link DataParser} interface and allows to parse raw
  * data of the weather which are represents by the JSON data format.
  */
 public class JSONDataParserImpl implements DataParser {
@@ -65,7 +63,7 @@ public class JSONDataParserImpl implements DataParser {
 
     @Override
     public List<OfferVO> getOffers(final String inputData) {
-        final List<OfferVO> offersItems = new ArrayList<OfferVO>();
+        final List<OfferVO> offersItems = new ArrayList<>();
         final JSONObject jsonObject = getJSONFromRawData(inputData);
         if (!jsonObject.has(OffersVO.KEY_OFFERS)) {
             return offersItems;
@@ -75,7 +73,7 @@ public class JSONDataParserImpl implements DataParser {
         String title;
         String teaser;
         String thumbnailHires;
-        Double payout;
+        double payout;
         OfferVO offerItem;
         try {
             for (int i = 0; i < offersJSON.length(); i++) {
@@ -124,7 +122,7 @@ public class JSONDataParserImpl implements DataParser {
      * This method converts raw data which comes from the server into the JSON object.
      *
      * @param rawData Raw data from the server.
-     * @return Instance of the {@link org.json.JSONObject}.
+     * @return Instance of the {@link JSONObject}.
      */
     protected JSONObject getJSONFromRawData(final String rawData) {
         if (rawData == null) {

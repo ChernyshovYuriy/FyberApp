@@ -5,10 +5,8 @@ package com.yuriy.fyberapp.vo;
  * At Android Studio
  * On 11/28/14
  * E-Mail: chernyshov.yuriy@gmail.com
- */
-
-/**
- * {@link com.yuriy.fyberapp.vo.OfferVO} is a Value Object that holds actual data about
+ *
+ * {@link OfferVO} is a Value Object that holds actual data about
  * concrete offer provided by the designed request.
  */
 public class OfferVO extends BaseVO {
@@ -107,9 +105,9 @@ public class OfferVO extends BaseVO {
     }
 
     /**
-     * Factory method to instantiate {@link com.yuriy.fyberapp.vo.OfferVO}
+     * Factory method to instantiate {@link OfferVO}
      *
-     * @return Instance of the {@link com.yuriy.fyberapp.vo.OfferVO}
+     * @return Instance of the {@link OfferVO}
      */
     public static OfferVO createInstance() {
         return new OfferVO();

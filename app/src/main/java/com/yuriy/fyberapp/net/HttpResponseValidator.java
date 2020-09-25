@@ -1,20 +1,18 @@
 package com.yuriy.fyberapp.net;
 
-/**
- * Created by Yuriy Chernyshov
- * At Android Studio
- * On 11/29/14
- * E-Mail: chernyshov.yuriy@gmail.com
- */
-
 import org.apache.http.Header;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * {@link com.yuriy.fyberapp.net.HttpResponseValidator} is a concrete implementation of the
- * {@link com.yuriy.fyberapp.net.ResponseValidator} interface designed to validate HTTP Responses.
+ * Created by Yuriy Chernyshov
+ * At Android Studio
+ * On 11/29/14
+ * E-Mail: chernyshov.yuriy@gmail.com
+ *
+ * {@link HttpResponseValidator} is a concrete implementation of the
+ * {@link ResponseValidator} interface designed to validate HTTP Responses.
  */
 public class HttpResponseValidator implements ResponseValidator {
 
@@ -86,9 +84,9 @@ public class HttpResponseValidator implements ResponseValidator {
     }
 
     /**
-     * Factory method to instantiate {@link com.yuriy.fyberapp.net.HttpResponseValidator}
+     * Factory method to instantiate {@link HttpResponseValidator}
      *
-     * @return Instance of the {@link com.yuriy.fyberapp.net.HttpResponseValidator}
+     * @return Instance of the {@link HttpResponseValidator}
      */
     public static HttpResponseValidator createInstance() {
         return new HttpResponseValidator();

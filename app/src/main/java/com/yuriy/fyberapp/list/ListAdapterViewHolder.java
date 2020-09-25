@@ -1,17 +1,15 @@
 package com.yuriy.fyberapp.list;
 
+import android.widget.ImageView;
+import android.widget.TextView;
+
 /**
  * Created by Yuriy Chernyshov
  * At Android Studio
  * On 11/29/14
  * E-Mail: chernyshov.yuriy@gmail.com
- */
-
-import android.widget.ImageView;
-import android.widget.TextView;
-
-/**
- * {@link com.yuriy.fyberapp.list.ListAdapterViewHolder} is a helper class to keep references for
+ *
+ * {@link ListAdapterViewHolder} is a helper class to keep references for
  * the View elements of the single row in the List
  */
 public class ListAdapterViewHolder {

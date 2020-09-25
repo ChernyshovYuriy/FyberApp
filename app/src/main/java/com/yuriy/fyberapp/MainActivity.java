@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.yuriy.fyberapp.list.ListAdapterData;
 import com.yuriy.fyberapp.list.OfferAdapter;
@@ -45,7 +47,7 @@ public class MainActivity extends FragmentActivity {
     private ProgressDialog mProgressDialog;
 
     /**
-     * Stores an instance of {@link com.yuriy.fyberapp.MainActivity.DownloadHandler}.
+     * Stores an instance of {@link DownloadHandler}.
      */
     private Handler mDownloadHandler = null;
 
@@ -68,7 +70,7 @@ public class MainActivity extends FragmentActivity {
         // Create and set empty adapter
         mListAdapter = new OfferAdapter(this, mImageFetcher);
 
-        final ListView listView = (ListView) findViewById(R.id.offers_list_view);
+        final ListView listView = findViewById(R.id.offers_list_view);
         listView.setAdapter(mListAdapter);
 
         if (savedInstanceState == null) {
@@ -142,11 +144,12 @@ public class MainActivity extends FragmentActivity {
     }
 
     /**
-     * Add collection of the {@link com.yuriy.fyberapp.vo.OfferVO}'s into adapter.
-     * @param data Collection of the {@link com.yuriy.fyberapp.vo.OfferVO}
+     * Add collection of the {@link OfferVO}'s into adapter.
+     *
+     * @param data Collection of the {@link OfferVO}
      */
     private void setListAdapterData(final List<OfferVO> data) {
-        final ListView listView = (ListView) findViewById(R.id.offers_list_view);
+        final ListView listView = findViewById(R.id.offers_list_view);
         if (listView == null) {
             return;
         }
@@ -157,7 +160,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     /**
-     * Callback method that is called from the {@link com.yuriy.fyberapp.RequestParametersDialog}.
+     * Callback method that is called from the {@link RequestParametersDialog}.
      *
      * @param apiKey            API Key
      * @param appId             Application ID
@@ -171,7 +174,7 @@ public class MainActivity extends FragmentActivity {
 
         hideResponseErrorMessage();
 
-        final ListView listView = (ListView) findViewById(R.id.offers_list_view);
+        final ListView listView = findViewById(R.id.offers_list_view);
         listView.setVisibility(View.GONE);
 
         mListAdapter.clear();
@@ -209,7 +212,7 @@ public class MainActivity extends FragmentActivity {
      */
     private void showResponseErrorMessage(final String message) {
         Log.d(CLASS_NAME, "Error message:" + message);
-        final TextView textView = (TextView) findViewById(R.id.response_error_msg_view);
+        final TextView textView = findViewById(R.id.response_error_msg_view);
         textView.setVisibility(View.VISIBLE);
         textView.setText(message);
     }
@@ -218,23 +221,23 @@ public class MainActivity extends FragmentActivity {
      * Hide response error message.
      */
     private void hideResponseErrorMessage() {
-        final TextView textView = (TextView) findViewById(R.id.response_error_msg_view);
+        final TextView textView = findViewById(R.id.response_error_msg_view);
         textView.setText("");
         textView.setVisibility(View.GONE);
     }
 
     /**
-     * An inner class that inherits from {@link android.os.Handler}
-     * and uses its {@link android.os.Handler#handleMessage(android.os.Message)}
+     * An inner class that inherits from {@link Handler}
+     * and uses its {@link Handler#handleMessage(Message)}
      * hook method to process Messages
-     * sent to it from the {@link com.yuriy.fyberapp.service.DownloadingService}.
+     * sent to it from the {@link DownloadingService}.
      */
     private static class DownloadHandler extends Handler {
 
         /**
          * Allows Activity to be garbage collected properly.
          */
-        private WeakReference<MainActivity> mActivity;
+        private final WeakReference<MainActivity> mActivity;
 
         /**
          * Class constructor constructs {@link #mActivity} as weak reference
@@ -243,12 +246,13 @@ public class MainActivity extends FragmentActivity {
          * @param activity The corresponding activity.
          */
         public DownloadHandler(final MainActivity activity) {
-            mActivity = new WeakReference<MainActivity>(activity);
+            super(Looper.getMainLooper());
+            mActivity = new WeakReference<>(activity);
         }
 
         /**
          * This hook method is dispatched in response to receiving the
-         * pathname back from the {@link com.yuriy.fyberapp.service.DownloadingService}.
+         * pathname back from the {@link DownloadingService}.
          */
         public void handleMessage(final Message message) {
 

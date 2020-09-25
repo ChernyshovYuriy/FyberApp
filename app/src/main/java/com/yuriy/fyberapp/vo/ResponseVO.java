@@ -1,16 +1,14 @@
 package com.yuriy.fyberapp.vo;
 
+import org.apache.http.Header;
+
 /**
  * Created by Yuriy Chernyshov
  * At Android Studio
  * On 11/28/14
  * E-Mail: chernyshov.yuriy@gmail.com
- */
-
-import org.apache.http.Header;
-
-/**
- * {@link com.yuriy.fyberapp.vo.ResponseVO} is a Value Object that holds actual data of the
+ *
+ * {@link ResponseVO} is a Value Object that holds actual data of the
  * response, e.g. response code, response data.
  */
 public class ResponseVO {
@@ -83,9 +81,9 @@ public class ResponseVO {
     }
 
     /**
-     * Factory method to instantiate {@link com.yuriy.fyberapp.vo.ResponseVO}
+     * Factory method to instantiate {@link ResponseVO}
      *
-     * @return Instance of the {@link com.yuriy.fyberapp.vo.ResponseVO}
+     * @return Instance of the {@link ResponseVO}
      */
     public static ResponseVO createInstance() {
         return new ResponseVO();

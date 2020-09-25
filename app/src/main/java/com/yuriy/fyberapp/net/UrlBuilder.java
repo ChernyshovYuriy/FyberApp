@@ -1,12 +1,5 @@
 package com.yuriy.fyberapp.net;
 
-/**
- * Created by Yuriy Chernyshov
- * At Android Studio
- * On 11/26/14
- * E-Mail: chernyshov.yuriy@gmail.com
- */
-
 import com.yuriy.fyberapp.vo.RequestParametersVO;
 
 import java.io.UnsupportedEncodingException;
@@ -14,6 +7,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
+ * Created by Yuriy Chernyshov
+ * At Android Studio
+ * On 11/26/14
+ * E-Mail: chernyshov.yuriy@gmail.com
+ *
  * {@link UrlBuilder} is a helper class to provide abilities to
  * build request URLs according to API specification.
  */

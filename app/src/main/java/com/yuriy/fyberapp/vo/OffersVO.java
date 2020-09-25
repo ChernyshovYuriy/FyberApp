@@ -1,17 +1,15 @@
 package com.yuriy.fyberapp.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Yuriy Chernyshov
  * At Android Studio
  * On 11/28/14
  * E-Mail: chernyshov.yuriy@gmail.com
- */
-
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * {@link com.yuriy.fyberapp.vo.OffersVO} is a Value Object that holds actual data about
+ *
+ * {@link OffersVO} is a Value Object that holds actual data about
  * offers provided by the designed request.
  */
 public class OffersVO extends BaseVO {
@@ -32,7 +30,7 @@ public class OffersVO extends BaseVO {
     public static final String KEY_OFFERS = "offers";
 
     /**
-     * Collection of the {@link com.yuriy.fyberapp.vo.OfferVO}'s
+     * Collection of the {@link OfferVO}'s
      */
     private final List<OfferVO> mOfferVOs = new ArrayList<OfferVO>();
 
@@ -58,11 +56,11 @@ public class OffersVO extends BaseVO {
     }
 
     /**
-     * Return {@link com.yuriy.fyberapp.vo.OfferVO} from the specified position, or an empty
+     * Return {@link OfferVO} from the specified position, or an empty
      * Offer is position is out of bounds.
      *
      * @param position Position of the Offer in the collection.
-     * @return {@link com.yuriy.fyberapp.vo.OfferVO}.
+     * @return {@link OfferVO}.
      */
     public OfferVO getOfferVOAt(final int position) {
         // In case of out of bounds position - return an empty Offer.
@@ -73,9 +71,9 @@ public class OffersVO extends BaseVO {
     }
 
     /**
-     * Set {@link com.yuriy.fyberapp.vo.OfferVO} into the collection.
+     * Set {@link OfferVO} into the collection.
      *
-     * @param value Instance of the {@link com.yuriy.fyberapp.vo.OfferVO}.
+     * @param value Instance of the {@link OfferVO}.
      */
     public void addOfferVO(final OfferVO value) {
         mOfferVOs.add(value);
@@ -92,13 +90,13 @@ public class OffersVO extends BaseVO {
      * @return Copy of the collection of the Offers.
      */
     public List<OfferVO> getOffers() {
-        return new ArrayList<OfferVO>(mOfferVOs);
+        return new ArrayList<>(mOfferVOs);
     }
 
     /**
-     * Factory method to instantiate {@link com.yuriy.fyberapp.vo.OffersVO}
+     * Factory method to instantiate {@link OffersVO}
      *
-     * @return Instance of the {@link com.yuriy.fyberapp.vo.OffersVO}
+     * @return Instance of the {@link OffersVO}
      */
     public static OffersVO createInstance() {
         return new OffersVO();
